@@ -1,0 +1,55 @@
+html {
+  height: 100%;
+}
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+body #header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  color: #ffffff;
+  background-color: #666666;
+  height: 50px;
+  width: 100%;
+}
+body #header .headerTitle {
+  margin: 0;
+  display: inline-block;
+}
+body #header #entryForm {
+  display: inline-block;
+}
+body #header #rebuildPage {
+  display: inline-block;
+}
+body #content {
+  margin-top: 50px;
+  background-color: #aaaaaa;
+  color: #ffffff;
+}
+body #content .entryListWrapper {
+  width: 200px;
+  height: 450px;
+  display: inline-block;
+  overflow: hidden;
+  whitespace: no-wrap;
+  margin: 7px 5px 5px 5px;
+  border: 1px solid #dddddd;
+  box-shadow: 0 0 2px 2px #dddddd;
+}
+body #footer {
+  color: #ffffff;
+  background-color: #666666;
+  height: 30px;
+  width: 100%;
+}
+.actionButton {
+  border: 1px solid #000000;
+  border-radius: 3px;
+  box-shadow: 0 0 2x 2px #ffffff;
+  background-color: #dddddd;
+  padding: 3px 5px;
+}
