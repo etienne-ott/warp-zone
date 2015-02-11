@@ -72,7 +72,7 @@ if (hasRelevantPostData($_POST)) {
 $errors = array_merge($errors, rebuildMain());
 
 if (empty($errors)) {
-    header('Location: /Startseite/index.html');
+    header('Location: ./index.html');
 } else {
     echo implode('<br/>', $errors);
 }
