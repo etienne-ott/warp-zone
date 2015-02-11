@@ -65,6 +65,10 @@ function createOrUpdateEntry($data) {
 
 // Do the thing
 
+if (!file_exists(CSV_FILENAME)) {
+    file_put_contents(CSV_FILENAME, "url,displayName,section,weight\n");
+}
+
 if (hasRelevantPostData($_POST)) {
     $errors = createOrUpdateEntry($_POST);
 }
