@@ -39,20 +39,25 @@ class Entry {
         return $entries;
     }
 
-    public function writeToCsvFile($filename) {
-        $handle = fopen($filename, "a+");
+    public static function writeToCsvFile($filename, $entries) {
+        $handle = fopen($filename, "w");
         if ($handle === FALSE) {
             throw new FileNotFoundException("Could not find or open file: $filename");
-        } else {
-            $headerMap = array_flip(fgetcsv($handle, 0, ","));
+        }
 
+        fputcsv($handle, self::$fields);
+        $headerMap = array_flip(self::$fields);
+
+        foreach ($entries as $entry) {
             fputcsv($handle, array(
-                $headerMap['url'] => $this->url,
-                $headerMap['displayName'] => $this->displayName,
-                $headerMap['section'] => $this->section,
+                $headerMap['url'] => $entry->url,
+                $headerMap['displayName'] => $entry->displayName,
+                $headerMap['section'] => $entry->section,
                 $headerMap['weight'] => 0 // Not implemented yet
             ));
         }
+
+        fclose($handle);
     }
 
     public function toArray() {
