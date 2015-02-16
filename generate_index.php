@@ -55,7 +55,10 @@ function createOrUpdateEntry($data) {
             'section' => empty($data['section']) ? DEFAULT_COLUMN : $data['section'],
             'displayName' => empty($data['displayName']) ? $data['url'] : $data['displayName']
         ));
-        $entry->writeToCsvFile(CSV_FILENAME);
+
+        $entries = Entry::readFromCsvFile(CSV_FILENAME);
+        $entries = Entry::replaceEntryInList($entries, $entry);
+        Entry::writeToCsvFile(CSV_FILENAME, $entries);
     } catch (Exception $e) {
         $errors[] = sprintf("Could not update/save entry: %s\n", $e->getMessage());
     }
