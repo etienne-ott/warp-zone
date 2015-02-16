@@ -22,20 +22,21 @@ class Entry {
         $handle = fopen($filename, "r");
         if ($handle === FALSE) {
             throw new FileNotFoundException("Could not find or open file: $filename");
-        } else {
-            $headers = fgetcsv($handle, 0, ",");
-            $entries = array();
-
-            while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
-                $arr = array();
-                for ($i = 0; $i < count($data); $i++) {
-                    $arr[$headers[$i]] = $data[$i];
-                }
-                $entries[] = Entry::createFromArray($arr);
-            }
-
-            return $entries;
         }
+
+        $headers = fgetcsv($handle, 0, ",");
+        $entries = array();
+
+        while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
+            $arr = array();
+            for ($i = 0; $i < count($data); $i++) {
+                $arr[$headers[$i]] = $data[$i];
+            }
+            $entries[] = Entry::createFromArray($arr);
+        }
+
+        fclose($handle);
+        return $entries;
     }
 
     public function writeToCsvFile($filename) {
