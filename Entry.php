@@ -60,6 +60,15 @@ class Entry {
         fclose($handle);
     }
 
+    public static function replaceEntryInList($entries, $newEntry) {
+        foreach ($entries as $index => $entry) {
+            if ($entry->url === $newEntry->url) {
+                $entries[$index] = $newEntry;
+            }
+        }
+        return $entries;
+    }
+
     public function toArray() {
         $arr = array();
         foreach (self::$fields as $fieldName) {
