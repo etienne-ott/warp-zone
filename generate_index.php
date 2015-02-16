@@ -57,7 +57,7 @@ function createOrUpdateEntry($data) {
         ));
         $entry->writeToCsvFile(CSV_FILENAME);
     } catch (Exception $e) {
-        $errors[] = sprintf("Could not compile less file %s: %s\n", $filename, $e->getMessage());
+        $errors[] = sprintf("Could not update/save entry: %s\n", $e->getMessage());
     }
 
     return $errors;
