@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+ob_start();
 
 include_once "Template.php";
 include_once "Exceptions.php";
@@ -67,6 +68,7 @@ function createOrUpdateEntry($data) {
 }
 
 // Do the thing
+$errors = array();
 
 if (!file_exists(CSV_FILENAME)) {
     file_put_contents(CSV_FILENAME, "url,displayName,section,weight\n");
@@ -78,8 +80,9 @@ if (hasRelevantPostData($_POST)) {
 
 $errors = array_merge($errors, rebuildMain());
 
-if (empty($errors)) {
+if (empty($errors) && ob_get_length() === 0) {
     header('Location: ./index.html');
 } else {
+    ob_end_flush();
     echo implode('<br/>', $errors);
 }
