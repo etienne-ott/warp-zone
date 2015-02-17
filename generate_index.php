@@ -58,7 +58,7 @@ function createOrUpdateEntry($data) {
         ));
 
         $entries = Entry::readFromCsvFile(CSV_FILENAME);
-        $entries = Entry::replaceEntryInList($entries, $entry);
+        $entries = Entry::replaceOrAddEntryInList($entries, $entry);
         Entry::writeToCsvFile(CSV_FILENAME, $entries);
     } catch (Exception $e) {
         $errors[] = sprintf("Could not update/save entry: %s\n", $e->getMessage());

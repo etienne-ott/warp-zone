@@ -60,12 +60,19 @@ class Entry {
         fclose($handle);
     }
 
-    public static function replaceEntryInList($entries, $newEntry) {
+    public static function replaceOrAddEntryInList($entries, $newEntry) {
+        $foundEntry = false;
         foreach ($entries as $index => $entry) {
             if ($entry->url === $newEntry->url) {
                 $entries[$index] = $newEntry;
+                $foundEntry = true;
             }
         }
+
+        if (!$foundEntry) {
+            $entries[] = $newEntry;
+        }
+
         return $entries;
     }
 
