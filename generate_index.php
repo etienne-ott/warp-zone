@@ -44,7 +44,7 @@ function rebuildMain() {
 }
 
 function hasRelevantPostData($data) {
-    return isset($data['submit']) && !empty($data['url']);
+    return isset($data['submit']) && (!empty($data['url']) || !empty($data['newSection']));
 }
 
 function createOrUpdateEntry($data) {
@@ -67,6 +67,11 @@ function createOrUpdateEntry($data) {
     return $errors;
 }
 
+function checkAndAddNewSection($data) {
+    $errors = array();
+    return $errors;
+}
+
 // Do the thing
 $errors = array();
 
@@ -75,7 +80,8 @@ if (!file_exists(CSV_FILENAME)) {
 }
 
 if (hasRelevantPostData($_POST)) {
-    $errors = createOrUpdateEntry($_POST);
+    $errors = array_merge($errors, checkAndAddNewSection($_POST));
+    $errors = array_merge($errors, createOrUpdateEntry($_POST));
 }
 
 $errors = array_merge($errors, rebuildMain());
