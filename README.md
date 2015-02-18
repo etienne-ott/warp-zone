@@ -8,14 +8,12 @@ dedication to the jQuery gods.
 ### Requirements(~) & Recommendations(+)
 * ~ PHP >= 5.0, though it might work with previous versions
 * + Properly configured .htaccess and file-access rights
-* + Backup system for the entries file
+* + Backup system for the data files
 
 ### Features implemented(~) and planned(+) in no particular order
 * ~ Display of existing entries
-* ~ Form to create new entries
-* + Update existing URLs
+* ~ Form to create new entries/sections
 * + Theme-picker with various themes
-* + Add sections within the entry form
 * + Weight-sorting of entries
 * + In-page editing of order and section
 * + Option to track and weigh entries by how often they are clicked
