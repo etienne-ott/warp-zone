@@ -10,7 +10,7 @@ include_once "ElementFormat.php";
 include_once "library/less/lessc.inc.php";
 
 define("DEFAULT_COLUMN", 'Read later');
-define("CSV_FILENAME", 'entries.csv');
+define("ENTRIES_FILENAME", 'entries.csv');
 define("SECTIONS_FILENAME", 'sections.csv');
 
 function rebuildMain() {
@@ -19,7 +19,7 @@ function rebuildMain() {
     try {
         $template = new Template('templates/index.html');
         
-        $entries = Entry::readFromCsvFile(CSV_FILENAME);
+        $entries = Entry::readFromCsvFile(ENTRIES_FILENAME);
         $entriesHtml = ElementFormat::formatEntries($entries);
         $optionsHtml = ElementFormat::formatOptions($entries);
 
@@ -58,9 +58,9 @@ function createOrUpdateEntry($data) {
             'displayName' => empty($data['displayName']) ? $data['url'] : $data['displayName']
         ));
 
-        $entries = Entry::readFromCsvFile(CSV_FILENAME);
+        $entries = Entry::readFromCsvFile(ENTRIES_FILENAME);
         $entries = Entry::replaceOrAddEntryInList($entries, $entry);
-        Entry::writeToCsvFile(CSV_FILENAME, $entries);
+        Entry::writeToCsvFile(ENTRIES_FILENAME, $entries);
     } catch (Exception $e) {
         $errors[] = sprintf("Could not update/save entry: %s\n", $e->getMessage());
     }
@@ -91,8 +91,8 @@ function checkAndAddNewSection($data) {
 // Do the thing
 $errors = array();
 
-if (!file_exists(CSV_FILENAME)) {
-    file_put_contents(CSV_FILENAME, "url,displayName,section,weight\n");
+if (!file_exists(ENTRIES_FILENAME)) {
+    file_put_contents(ENTRIES_FILENAME, "url,displayName,section,weight" . PHP_EOL);
 }
 
 if (!file_exists(SECTIONS_FILENAME)) {
