@@ -11,6 +11,7 @@ include_once "library/less/lessc.inc.php";
 
 define("DEFAULT_COLUMN", 'Read later');
 define("CSV_FILENAME", 'entries.csv');
+define("SECTIONS_FILENAME", 'sections.csv');
 
 function rebuildMain() {
     $errors = array();
@@ -69,6 +70,21 @@ function createOrUpdateEntry($data) {
 
 function checkAndAddNewSection($data) {
     $errors = array();
+
+    try {
+        $name = $data['newSection'] ? $data['newSection'] : $data['section'];
+        $name = $name ? $name : DEFAULT_COLUMN;
+        $section = Section::createFromArray(array(
+            'name' => $name
+        ));
+
+        $sections = Section::readFromCsvFile(SECTIONS_FILENAME);
+        $sections = Section::addIfNotExists($sections, $section);
+        Section::writeToCsvFile(SECTIONS_FILENAME);
+    } catch (Exception $e) {
+        $errors[] = sprintf("Could not check/save section: %s\n", $e->getMessage());
+    }
+
     return $errors;
 }
 
@@ -77,6 +93,10 @@ $errors = array();
 
 if (!file_exists(CSV_FILENAME)) {
     file_put_contents(CSV_FILENAME, "url,displayName,section,weight\n");
+}
+
+if (!file_exists(SECTIONS_FILENAME)) {
+    file_put_contents(SECTIONS_FILENAME, "name,weight" . PHP_EOL);
 }
 
 if (hasRelevantPostData($_POST)) {
