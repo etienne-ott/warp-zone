@@ -12,30 +12,30 @@
             <h3 class="headerTitle">Warp zone</h3>
             <form id="entryForm" method="post" action="generate_index.php">
                 <div class="inputField">
-                    <span class="inputLabel">URL</span>
+                    <span class="inputLabel">URL</span><br/>
                     <input class="textInput" type="text" name="url"/>
                 </div>
 
                 <div class="inputField">
-                    <span class="inputLabel">Name</span>
+                    <span class="inputLabel">Name</span><br/>
                     <input class="textInput" type="text" name="displayName"/>
                 </div>
 
                 <div class="inputField">
-                    <span class="inputLabel">Section</span>
+                    <span class="inputLabel">Section</span><br/>
                     <select class="selectInput" name="section">
                         <%ph id="selectOptions"%>
                     </select>
                 </div>
 
                 <div class="inputField">
-                    <span class="inputLabel">or: New Section</span>
+                    <span class="inputLabel">or: New section</span><br/>
                     <input class="textInput" name="newSection" />
                 </div>
 
                 <div class="inputField">
-                    <span class="inputLabel">URL</span>
-                    <input class="submitButton" type="submit" name="submit">
+                    <span class="inputLabel">URL</span><br/>
+                    <input class="submitButton actionButton" type="submit" name="submit" value="Submit"/>
                 </div>
             </form>
 
