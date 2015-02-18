@@ -63,7 +63,7 @@ class Section {
 
         foreach ($sections as $section) {
             fputcsv($handle, array(
-                $headerMap['name'] => $section->url,
+                $headerMap['name'] => $section->name,
                 $headerMap['weight'] => 0 // Not implemented yet
             ));
         }

@@ -6,6 +6,7 @@ ob_start();
 include_once "Template.php";
 include_once "Exceptions.php";
 include_once "Entry.php";
+include_once "Section.php";
 include_once "ElementFormat.php";
 include_once "library/less/lessc.inc.php";
 
@@ -54,7 +55,7 @@ function createOrUpdateEntry($data) {
     try {
         $entry = Entry::createFromArray(array(
             'url' => $data['url'],
-            'section' => empty($data['section']) ? DEFAULT_COLUMN : $data['section'],
+            'section' => empty($data['newSection']) ? $data['section'] : $data['newSection'],
             'displayName' => empty($data['displayName']) ? $data['url'] : $data['displayName']
         ));
 
@@ -72,15 +73,14 @@ function checkAndAddNewSection($data) {
     $errors = array();
 
     try {
-        $name = $data['newSection'] ? $data['newSection'] : $data['section'];
-        $name = $name ? $name : DEFAULT_COLUMN;
+        $name = empty($data['newSection']) ? $data['section'] : $data['newSection'];
         $section = Section::createFromArray(array(
             'name' => $name
         ));
 
         $sections = Section::readFromCsvFile(SECTIONS_FILENAME);
         $sections = Section::addIfNotExists($sections, $section);
-        Section::writeToCsvFile(SECTIONS_FILENAME);
+        Section::writeToCsvFile(SECTIONS_FILENAME, $sections);
     } catch (Exception $e) {
         $errors[] = sprintf("Could not check/save section: %s\n", $e->getMessage());
     }

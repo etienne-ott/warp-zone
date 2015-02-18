@@ -29,7 +29,7 @@ class ElementFormat {
             }
         }
 
-        $html = '<option class="selectOption" value="default"></option>' . PHP_EOL;;
+        $html = '<option class="selectOption" value="' . DEFAULT_COLUMN . '"></option>' . PHP_EOL;
         foreach ($sections as $section) {
             $html .= '<option class="selectOption" value="' . $section . '">' . $section . '</option>' . PHP_EOL;
         }
