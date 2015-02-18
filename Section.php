@@ -37,6 +37,21 @@ class Section {
         return $sections;
     }
 
+    public static function addIfNotExists($sections, $newSection) {
+        $foundSection = false;
+        foreach ($sections as $section) {
+            if ($section->name === $newSection->name) {
+                $foundSection = true;
+            }
+        }
+
+        if (!$foundSection) {
+            $sections[] = $newSection;
+        }
+
+        return $sections;
+    }
+
     public static function writeToCsvFile($filename, $sections) {
         $handle = fopen($filename, "w");
         if ($handle === FALSE) {
