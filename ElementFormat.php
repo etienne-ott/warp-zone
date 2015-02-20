@@ -6,6 +6,20 @@
  */
 class ElementFormat {
     /**
+     * Returns a function used in sorting functions to sort objects by their
+     * weight. Assumes the objects have a public field named "weight",
+     * otherwise assumes they have a weight of 0.
+     *
+     * @return function A function used in sorting function such as uasort()
+     */
+    public static function getWeightSortFunction() {
+        return function($a, $b) {
+            return (isset($a->weight) ? $a->weight : 0)
+                - (isset($b->weight) ? $b->weight : 0);
+        };
+    }
+
+    /**
      * Formats the given lists of entries and sections as <ul> lists with the
      * entries as list items. For each different section a new wrapper is
      * created wrapping around the list itself and a <span> section label. If
@@ -24,19 +38,13 @@ class ElementFormat {
                 . '<ul class="entryList">' . PHP_EOL;
         };
 
-        uasort($sections, function($a, $b) {
-            return (isset($a->weight) ? $a->weight : 0)
-                - (isset($b->weight) ? $b->weight : 0);
-        });
+        uasort($sections, self::getWeightSortFunction());
 
         foreach ($sections as $section) {
             $tables[$section->name] = $sectionHeader($section->name);
         }
 
-        uasort($entries, function($a, $b) {
-            return (isset($a->weight) ? $a->weight : 0)
-                - (isset($b->weight) ? $b->weight : 0);
-        });
+        uasort($entries, self::getWeightSortFunction());
 
         foreach($entries as $entry) {
             if (!isset($tables[$entry->section])) {
@@ -62,10 +70,7 @@ class ElementFormat {
      * @return string The formatted HTML structure
      */
     public static function formatOptions($sections) {
-        uasort($sections, function($a, $b) {
-            return (isset($a->weight) ? $a->weight : 0)
-                - (isset($b->weight) ? $b->weight : 0);
-        });
+        uasort($sections, self::getWeightSortFunction());
 
         $html = '<option class="selectOption" value="' . DEFAULT_COLUMN . '"></option>' . PHP_EOL;
         foreach ($sections as $section) {
