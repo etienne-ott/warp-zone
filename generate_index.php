@@ -1,4 +1,6 @@
 <?php
+// Turn on all errors and buffer any output. This is later used for
+// checking against any errors.
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ob_start();
@@ -14,6 +16,12 @@ define("DEFAULT_COLUMN", 'Read later');
 define("ENTRIES_FILENAME", 'entries.csv');
 define("SECTIONS_FILENAME", 'sections.csv');
 
+/**
+ * Rebuilds the index.html file and compiles all LESS style files
+ * to CSS.
+ *
+ * @return array A list of error messages if errors occurred during execution
+ */
 function rebuildMain() {
     $errors = array();
 
@@ -45,10 +53,27 @@ function rebuildMain() {
     return $errors;
 }
 
+/**
+ * Returns if the given array contains POST data relevant for creating or
+ * updating entries or sections. It is assumed that the given array has the
+ * same structure as the global $_POST.
+ *
+ * @param array $data The POST data
+ * @return boolean True, if there is relevant POST data, false otherwise
+ */
 function hasRelevantPostData($data) {
     return isset($data['submit']) && (!empty($data['url']) || !empty($data['newSection']));
 }
 
+/**
+ * Creates or updates an entry, identified by URL, for the given POST data. It
+ * is assumed that the data has the same structure as the global $_POST. The
+ * entry is constructed from the given data, then saved to the entries file,
+ * overwriting an existing entry if it has the exact same URL.
+ *
+ * @param array $data The POST data
+ * @return array A list of error messages if any errors occured during execution
+ */
 function createOrUpdateEntry($data) {
     $errors = array();
 
@@ -69,6 +94,15 @@ function createOrUpdateEntry($data) {
     return $errors;
 }
 
+/**
+ * Creates or updates a section, identified by name, for the given POST data. It
+ * is assumed that the data has the same structure as the global $_POST. The
+ * section is constructed from the given data, then saved to the sections file,
+ * overwriting an existing section if it has the exact same name.
+ *
+ * @param array $data The POST data
+ * @return array A list of error messages if any errors occured during execution
+ */
 function checkAndAddNewSection($data) {
     $errors = array();
 
@@ -88,7 +122,8 @@ function checkAndAddNewSection($data) {
     return $errors;
 }
 
-// Do the thing
+// Now, do the thing
+
 $errors = array();
 
 if (!file_exists(ENTRIES_FILENAME)) {
@@ -106,6 +141,8 @@ if (hasRelevantPostData($_POST)) {
 
 $errors = array_merge($errors, rebuildMain());
 
+// Not all errors are caught by try-catch, therefore we also check for any premature
+// output to check if something went wrong
 if (empty($errors) && ob_get_length() === 0) {
     header('Location: ./index.html');
 } else {
