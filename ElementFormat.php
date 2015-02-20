@@ -34,7 +34,7 @@ class ElementFormat {
         $tables = array();
         $sectionHeader = function($name) {
             return '<div class="entryListWrapper">' . PHP_EOL
-                . '<span class="entryListTitle">' . $name . '</span>' . PHP_EOL
+                . '<div class="entryListTitle">' . $name . '</div>' . PHP_EOL
                 . '<ul class="entryList">' . PHP_EOL;
         };
 

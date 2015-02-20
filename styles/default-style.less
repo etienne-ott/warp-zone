@@ -1,19 +1,26 @@
+@import url(http://fonts.googleapis.com/css?family=Lato);
+
 @colorDarkGrey: #666666;
 @colorMiddleGrey: #aaaaaa;
+@colorLightMiddleGrey: #bdbdbd;
 @colorLightGrey: #dddddd;
 @colorWhite: #ffffff;
 @colorBlack: #000000;
+
 @headerHeight: 50px;
+@footerHeight: 30px;
+
 @headerFontColor: @colorWhite;
 @headerBackground: @colorDarkGrey;
 @contentFontColor: @colorWhite;
 @contentBackground: @colorMiddleGrey;
-@footerHeight: 30px;
 @footerFontColor: @colorWhite;
 @footerBackground: @colorDarkGrey;
+@entryWrapperBorder: @colorLightMiddleGrey;
 
 html {
     height: 100%;
+    font-family: 'Lato', sans-serif;
 }
 
 body {
@@ -31,37 +38,56 @@ body {
         width: 100%;
 
         .headerTitle {
-            margin: 0;
+            font-size: 20px;
+            margin: 0 0 0 10px;
             display: inline-block;
+        }
+
+        .submitButton {
+            cursor: pointer;
+            padding: 3px 4px 2px 4px !important;
         }
 
         #entryForm {
             display: inline-block;
 
             .inputField {
+                margin-left: 10px;
                 display: inline-block;
             }
         }
 
         #rebuildPage {
             display: inline-block;
+            margin-left: 20px;
         }
     }
 
     #content {
         margin-top: @headerHeight;
+        min-height: 100%;
         background-color: @contentBackground;
         color: @contentFontColor;
 
         .entryListWrapper {
             width: 200px;
-            height: 450px;
+            height: 300px;
             display: inline-block;
-            overflow: hidden;
+            overflow: auto;
             whitespace: no-wrap;
             margin: 7px 5px 5px 5px;
-            border: 1px solid @colorLightGrey;
-            box-shadow: 0 0 2px 2px @colorLightGrey;
+            border: 1px solid @entryWrapperBorder;
+            box-shadow: 0 0 2px 2px @entryWrapperBorder;
+
+            .entryListTitle {
+                margin-top: 5px;
+                text-align: center;
+                font-size: 16px;
+            }
+
+            .entryList {
+                margin-top: 0;
+            }
         }
     }
 
@@ -70,13 +96,23 @@ body {
         background-color: @footerBackground;
         height: @footerHeight;
         width: 100%;
+        padding-left: 10px;
+
+        span {
+            vertical-align: middle;
+        }
     }
 }
 
 .actionButton {
+    font-size: 14px;
     border: 1px solid @colorBlack;
     border-radius: 3px;
     box-shadow: 0 0 2x 2px @colorWhite;
     background-color: @colorLightGrey;
     padding: 3px 5px;
+}
+
+a {
+    text-decoration: none;
 }
