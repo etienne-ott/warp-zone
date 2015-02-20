@@ -30,3 +30,10 @@ dedication to the jQuery gods.
 5. Existing entries and sections are saved in the files ```entries.csv``` and ```sections.csv``` respectively. You can edit these files directly and apply the changes with the ```Rebuild``` button. For now, changing the weight of entries and sections must be done by editing the files.
 6. If you have a lot of entries it is advisable to regularly create backups of the files or schedule automatic backups. You should also make backups when downloading a new version of warp-zone to avoid having your data deleted accidentally on a rebuild.
 7. Now, slowly turn your warp zone into a complete index of the web and don't forget to be awesome.
+
+### Releases
+The source is released in two tracks. The tortoise track has simpler and fewer functionality. This is intended for developers who like things simple and don't need fancy UX gizmos. The hare track is always up to date and tries to be as convenient as possible, at the expense of simplicity.
+
+Hare: Latest release [v1.0](https://github.com/eott/warp-zone/releases/tag/v1.0-hare)
+
+Tortoise: Latest release [v1.0.1](https://github.com/eott/warp-zone/releases/tag/v.1.0.1-tortoise)
