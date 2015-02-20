@@ -7,7 +7,7 @@ class Entry {
     /**
      * @var array $fields A list of fields the class uses.
      */
-    private static $fields = array(
+    public static $fields = array(
         "url",         // URL of the link
         "displayName", // A name displayed instead of the raw URL
         "section",     // The name of the section

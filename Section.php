@@ -7,7 +7,7 @@ class Section {
     /**
      * @var array $fields A list of fields the class uses.
      */
-    private static $fields = array(
+    public static $fields = array(
         "name",  // Name of the section
         "weight" // Sections are sorted by ascending weight
     );
