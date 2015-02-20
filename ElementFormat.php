@@ -1,5 +1,18 @@
 <?php
+/**
+ * Provides functionality to render/format given elements as HTML structures.
+ * For example a list of Entry instances could be rendered as HTML lists with
+ * each entry as a list item.
+ */
 class ElementFormat {
+    /**
+     * Formats the given list of entries as <ul> lists with the entries as list
+     * items. For each different section a new wrapper is created wrapping
+     * around the list itself and a <span> section label.
+     * 
+     * @param array A list of entries to format
+     * @return string The formatted HTML structure
+     */
     public static function formatEntries($entries) {
         $tables = array();
 
@@ -21,6 +34,14 @@ class ElementFormat {
         return implode(PHP_EOL, $tables);
     }
 
+    /**
+     * Extracts the sections from the given list of entries and formats each
+     * section as <option> for a select input field with the name of the
+     * section both as value and label.
+     * 
+     * @param array A list of entries to format
+     * @return string The formatted HTML structure
+     */
     public static function formatOptions($entries) {
         $sections = array();
         foreach ($entries as $entry) {
