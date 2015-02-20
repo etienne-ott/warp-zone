@@ -128,11 +128,11 @@ function checkAndAddNewSection($data) {
 $errors = array();
 
 if (!file_exists(ENTRIES_FILENAME)) {
-    file_put_contents(ENTRIES_FILENAME, "url,displayName,section,weight" . PHP_EOL);
+    file_put_contents(ENTRIES_FILENAME, implode(CSV_SEP_CHAR, Entry::$fields) . PHP_EOL);
 }
 
 if (!file_exists(SECTIONS_FILENAME)) {
-    file_put_contents(SECTIONS_FILENAME, "name,weight" . PHP_EOL);
+    file_put_contents(SECTIONS_FILENAME, implode(CSV_SEP_CHAR, Section::$fields) . PHP_EOL);
 }
 
 if (hasRelevantPostData($_POST)) {
