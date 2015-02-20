@@ -16,6 +16,11 @@ class ElementFormat {
     public static function formatEntries($entries) {
         $tables = array();
 
+        uasort($entries, function($a, $b) {
+            return (isset($a->weight) ? $a->weight : 0)
+                - (isset($b->weight) ? $b->weight : 0);
+        });
+
         foreach($entries as $entry) {
             if (!isset($tables[$entry->section])) {
                 $tables[$entry->section] = '<div class="entryListWrapper">' . PHP_EOL

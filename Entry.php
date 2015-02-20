@@ -86,7 +86,7 @@ class Entry {
                 $headerMap['url'] => $entry->url,
                 $headerMap['displayName'] => $entry->displayName,
                 $headerMap['section'] => $entry->section,
-                $headerMap['weight'] => 0 // Not implemented yet
+                $headerMap['weight'] => $entry->weight
             ));
         }
 
