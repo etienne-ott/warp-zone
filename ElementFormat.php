@@ -51,7 +51,7 @@ class ElementFormat {
                 $tables[$entry->section] = $sectionHeader($entry->section);
             }
 
-            $tables[$entry->section] .= '<li><a href="' . $entry->url . '">' . $entry->displayName;
+            $tables[$entry->section] .= '<li><a href="' . htmlentities($entry->url) . '">' . $entry->displayName;
             $tables[$entry->section] .= '</a></li>' . PHP_EOL;
         }
 
@@ -72,7 +72,7 @@ class ElementFormat {
     public static function formatOptions($sections) {
         uasort($sections, self::getWeightSortFunction());
 
-        $html = '<option class="selectOption" value="' . DEFAULT_COLUMN . '"></option>' . PHP_EOL;
+        $html = '<option class="selectOption" value="' . DEFAULT_COLUMN . '">&nbsp;</option>' . PHP_EOL;
         foreach ($sections as $section) {
             $html .= '<option class="selectOption" value="' . $section->name . '">' . $section->name . '</option>' . PHP_EOL;
         }
