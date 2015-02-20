@@ -31,7 +31,9 @@ function rebuildMain() {
         
         $entries = Entry::readFromCsvFile(ENTRIES_FILENAME);
         $entriesHtml = ElementFormat::formatEntries($entries);
-        $optionsHtml = ElementFormat::formatOptions($entries);
+
+        $sections = Section::readFromCsvFile(SECTIONS_FILENAME);
+        $optionsHtml = ElementFormat::formatOptions($sections);
 
         $html = $template->replace("columns", $entriesHtml)
             ->replace("selectOptions", $optionsHtml)

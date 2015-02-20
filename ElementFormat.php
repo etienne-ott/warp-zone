@@ -40,24 +40,21 @@ class ElementFormat {
     }
 
     /**
-     * Extracts the sections from the given list of entries and formats each
-     * section as <option> for a select input field with the name of the
-     * section both as value and label.
+     * Formats each section as <option> for a select input field with the
+     * name of the section both as value and label.
      * 
-     * @param array A list of entries to format
+     * @param array A list of sections to format
      * @return string The formatted HTML structure
      */
-    public static function formatOptions($entries) {
-        $sections = array();
-        foreach ($entries as $entry) {
-            if (!isset($sections[$entry->section])) {
-                $sections[$entry->section] = $entry->section;
-            }
-        }
+    public static function formatOptions($sections) {
+        uasort($sections, function($a, $b) {
+            return (isset($a->weight) ? $a->weight : 0)
+                - (isset($b->weight) ? $b->weight : 0);
+        });
 
         $html = '<option class="selectOption" value="' . DEFAULT_COLUMN . '"></option>' . PHP_EOL;
         foreach ($sections as $section) {
-            $html .= '<option class="selectOption" value="' . $section . '">' . $section . '</option>' . PHP_EOL;
+            $html .= '<option class="selectOption" value="' . $section->name . '">' . $section->name . '</option>' . PHP_EOL;
         }
 
         return $html;
