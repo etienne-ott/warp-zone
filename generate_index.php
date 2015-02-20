@@ -13,6 +13,7 @@ include_once "ElementFormat.php";
 include_once "library/less/lessc.inc.php";
 
 define("DEFAULT_COLUMN", 'Read later');
+define("CSV_SEP_CHAR", ',');
 define("ENTRIES_FILENAME", 'entries.csv');
 define("SECTIONS_FILENAME", 'sections.csv');
 

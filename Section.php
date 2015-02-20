@@ -47,10 +47,10 @@ class Section {
             throw new FileNotFoundException("Could not find or open file: $filename");
         }
 
-        $headers = fgetcsv($handle, 0, ",");
+        $headers = fgetcsv($handle, 0, CSV_SEP_CHAR);
         $sections = array();
 
-        while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
+        while (($data = fgetcsv($handle, 0, CSV_SEP_CHAR)) !== FALSE) {
             $arr = array();
             for ($i = 0; $i < count($data); $i++) {
                 $arr[$headers[$i]] = $data[$i];
