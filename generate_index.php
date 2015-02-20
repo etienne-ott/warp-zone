@@ -29,11 +29,11 @@ function rebuildMain() {
     try {
         $template = new Template('templates/index.html');
         
-        $entries = Entry::readFromCsvFile(ENTRIES_FILENAME);
-        $entriesHtml = ElementFormat::formatEntries($entries);
-
         $sections = Section::readFromCsvFile(SECTIONS_FILENAME);
         $optionsHtml = ElementFormat::formatOptions($sections);
+
+        $entries = Entry::readFromCsvFile(ENTRIES_FILENAME);
+        $entriesHtml = ElementFormat::formatEntries($entries, $sections);
 
         $html = $template->replace("columns", $entriesHtml)
             ->replace("selectOptions", $optionsHtml)

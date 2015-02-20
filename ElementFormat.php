@@ -6,15 +6,32 @@
  */
 class ElementFormat {
     /**
-     * Formats the given list of entries as <ul> lists with the entries as list
-     * items. For each different section a new wrapper is created wrapping
-     * around the list itself and a <span> section label.
+     * Formats the given lists of entries and sections as <ul> lists with the
+     * entries as list items. For each different section a new wrapper is
+     * created wrapping around the list itself and a <span> section label. If
+     * an entry has a section for which no corresponding section exists in
+     * the section list, a new section is appended to the existing ones.
      * 
      * @param array A list of entries to format
+     * @param array A list of sections
      * @return string The formatted HTML structure
      */
-    public static function formatEntries($entries) {
+    public static function formatEntries($entries, $sections) {
         $tables = array();
+        $sectionHeader = function($name) {
+            return '<div class="entryListWrapper">' . PHP_EOL
+                . '<span class="entryListTitle">' . $name . '</span>' . PHP_EOL
+                . '<ul class="entryList">' . PHP_EOL;
+        };
+
+        uasort($sections, function($a, $b) {
+            return (isset($a->weight) ? $a->weight : 0)
+                - (isset($b->weight) ? $b->weight : 0);
+        });
+
+        foreach ($sections as $section) {
+            $tables[$section->name] = $sectionHeader($section->name);
+        }
 
         uasort($entries, function($a, $b) {
             return (isset($a->weight) ? $a->weight : 0)
@@ -23,9 +40,7 @@ class ElementFormat {
 
         foreach($entries as $entry) {
             if (!isset($tables[$entry->section])) {
-                $tables[$entry->section] = '<div class="entryListWrapper">' . PHP_EOL
-                    . '<span class="entryListTitle">' . $entry->section . '</span>' . PHP_EOL
-                    . '<ul class="entryList">' . PHP_EOL;
+                $tables[$entry->section] = $sectionHeader($entry->section);
             }
 
             $tables[$entry->section] .= '<li><a href="' . $entry->url . '">' . $entry->displayName;
