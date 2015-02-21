@@ -35,8 +35,12 @@ function rebuildMain() {
         $entries = Entry::readFromCsvFile(ENTRIES_FILENAME);
         $entriesHtml = ElementFormat::formatEntries($entries, $sections);
 
+        $themes = glob('styles/*.less');
+        $themesHtml = ElementFormat::formatThemeOptions($themes);
+
         $html = $template->replace("columns", $entriesHtml)
             ->replace("selectOptions", $optionsHtml)
+            ->replace("themeOptions", $themesHtml)
             ->render();
         file_put_contents("index.html", $html);
     } catch (Exception $e) {
