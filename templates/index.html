@@ -41,6 +41,19 @@
             <a href="generate_index.php">
                 <div class="actionButton" id="rebuildPage">Rebuild</div>
             </a>
+
+            <form id="themeForm" method="post" action="generate_index.php">
+                <div class="inputField">
+                    <span class="inputLabel">Pick theme</span><br/>
+                    <select class="selectInput" name="theme">
+                        <%ph id="themeOptions" %>
+                    </select>
+                </div>
+
+                <a href="generate_index.php">
+                    <div class="actionButton" id="applyTheme">Apply</div>
+                </a>
+            </form>
         </div>
 
         <div id="content">
