@@ -86,15 +86,18 @@ class ElementFormat {
      * automatically removes any ".less" and "styles/" occurences.
      * 
      * @param array $themes A list of theme filenames
+     * @param array $settings A map of settings
      * @return string The formatted HTML structure
      */
-    public static function formatThemeOptions($themes) {
+    public static function formatThemeOptions($themes, $settings) {
         $html = "";
 
         foreach ($themes as $filename) {
             $name = str_replace('styles/', '', $filename);
             $name = str_replace('.less', '', $name);
-            $html .= '<option class="selectOption" value="' . $name . '">' . $name . '</option>' . PHP_EOL;
+            $html .= '<option class="selectOption" '
+                . ($settings['Theme']['active_theme'] == $name ? 'selected="true" ' : '')
+                . 'value="' . $name . '">' . $name . '</option>' . PHP_EOL;
         }
 
         return $html;

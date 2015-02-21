@@ -21,9 +21,10 @@ define("SECTIONS_FILENAME", 'sections.csv');
  * Rebuilds the index.html file and compiles all LESS style files
  * to CSS.
  *
+ * @param array A map of settings with the same structure as the config file
  * @return array A list of error messages if errors occurred during execution
  */
-function rebuildMain() {
+function rebuildMain($settings) {
     $errors = array();
 
     try {
@@ -36,7 +37,7 @@ function rebuildMain() {
         $entriesHtml = ElementFormat::formatEntries($entries, $sections);
 
         $themes = glob('styles/*.less');
-        $themesHtml = ElementFormat::formatThemeOptions($themes);
+        $themesHtml = ElementFormat::formatThemeOptions($themes, $settings);
 
         $html = $template->replace("columns", $entriesHtml)
             ->replace("selectOptions", $optionsHtml)
@@ -143,6 +144,39 @@ function checkAndAddNewSection($data) {
     return $errors;
 }
 
+/**
+ * Update the theme settings for the given POST data and settings array.
+ * Saves the selected theme in the config file and changes the theme
+ * in the given settings array.
+ *
+ * @param array $data The POST data
+ * @param array &$settings The settings array to update
+ * @return array A list of error messages if errors occured during execution
+ */
+function updateThemeSettings($data, &$settings) {
+    $errors = array();
+
+    try {
+        $iniContent = file_get_contents('config.ini');
+        $iniContent = preg_replace(
+            '#active_theme\s*=.*#',
+            'active_theme = "' . $data['theme'] . '"',
+            $iniContent
+        );
+        file_put_contents('config.ini', $iniContent);
+    } catch (Exception $e) {
+        $errors[] = sprintf("Could not update ini file: %s\n", $e->getMessage());
+    }
+
+    if (isset($settings['Theme']['active_theme'])) {
+        $settings['Theme']['active_theme'] = $data['theme'];
+    } else {
+        $errors[] = sprintf("Did not find setting active_theme in section theme to update.\n");
+    }
+
+    return $errors;
+}
+
 // Now, do the thing
 
 $errors = array();
@@ -166,7 +200,11 @@ if (hasRelevantContentData($_POST)) {
     $errors = array_merge($errors, createOrUpdateEntry($_POST));
 }
 
-$errors = array_merge($errors, rebuildMain());
+if (hasRelevantThemeData($_POST)) {
+    $errors = array_merge($errors, updateThemeSettings($_POST, $settings));
+}
+
+$errors = array_merge($errors, rebuildMain($settings));
 
 // Not all errors are caught by try-catch, therefore we also check for any premature
 // output to check if something went wrong
