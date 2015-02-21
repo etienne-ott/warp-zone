@@ -68,8 +68,20 @@ function rebuildMain() {
  * @param array $data The POST data
  * @return boolean True, if there is relevant POST data, false otherwise
  */
-function hasRelevantPostData($data) {
+function hasRelevantContentData($data) {
     return isset($data['submit']) && (!empty($data['url']) || !empty($data['newSection']));
+}
+
+/**
+ * Returns if the given array contains POST data relevant for the theme
+ * selection. It is assumed that the given array has the same
+ * structure as the global $_POST.
+ *
+ * @param array $data The POST data
+ * @return boolean True, if there is relevant POST data, false otherwise
+ */
+function hasRelevantThemeData($data) {
+    return !empty($data['theme']);
 }
 
 /**
@@ -149,7 +161,7 @@ if (!file_exists('config.ini')) {
 
 $settings = parse_ini_file('config.ini', true);
 
-if (hasRelevantPostData($_POST)) {
+if (hasRelevantContentData($_POST)) {
     $errors = array_merge($errors, checkAndAddNewSection($_POST));
     $errors = array_merge($errors, createOrUpdateEntry($_POST));
 }
