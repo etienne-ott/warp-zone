@@ -42,6 +42,7 @@ function rebuildMain($settings) {
         $html = $template->replace("columns", $entriesHtml)
             ->replace("selectOptions", $optionsHtml)
             ->replace("themeOptions", $themesHtml)
+            ->replace("activeTheme", $settings['Theme']['active_theme'])
             ->render();
         file_put_contents("index.html", $html);
     } catch (Exception $e) {
