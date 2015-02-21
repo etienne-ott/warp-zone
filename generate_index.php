@@ -147,6 +147,8 @@ if (!file_exists('config.ini')) {
     copy('config-default.ini', 'config.ini');
 }
 
+$settings = parse_ini_file('config.ini', true);
+
 if (hasRelevantPostData($_POST)) {
     $errors = array_merge($errors, checkAndAddNewSection($_POST));
     $errors = array_merge($errors, createOrUpdateEntry($_POST));
