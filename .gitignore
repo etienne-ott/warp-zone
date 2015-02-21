@@ -1,3 +1,4 @@
 *.csv
 styles/*.css
 index.html
+config.ini
