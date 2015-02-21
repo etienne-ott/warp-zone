@@ -143,6 +143,10 @@ if (!file_exists(SECTIONS_FILENAME)) {
     file_put_contents(SECTIONS_FILENAME, implode(CSV_SEP_CHAR, Section::$fields) . PHP_EOL);
 }
 
+if (!file_exists('config.ini')) {
+    copy('config-default.ini', 'config.ini');
+}
+
 if (hasRelevantPostData($_POST)) {
     $errors = array_merge($errors, checkAndAddNewSection($_POST));
     $errors = array_merge($errors, createOrUpdateEntry($_POST));
