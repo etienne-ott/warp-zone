@@ -14,7 +14,7 @@ dedication to the jQuery gods.
 * ~ Display of existing entries
 * ~ Form to create new entries/sections
 * ~ Sorting of entries and sections by weight
-* + Theme-picker with various color/size themes
+* ~ Theme-picker with various color/size themes
 * + In-page editing of entries
 * + In-page editing of entry/section order
 * + Option to track and weigh entries by how often they are clicked
@@ -34,6 +34,6 @@ dedication to the jQuery gods.
 ### Releases
 The source is released in two tracks. The tortoise track has simpler and fewer functionality. This is intended for developers who like things simple and don't need fancy UX gizmos. The hare track is always up to date and tries to be as convenient as possible, at the expense of simplicity.
 
-Hare: Latest release [v1.0](https://github.com/eott/warp-zone/releases/tag/v1.0-hare)
+Hare: Latest release [v1.1](https://github.com/eott/warp-zone/releases/tag/v1.1-hare)
 
-Tortoise: Latest release [v1.0.1](https://github.com/eott/warp-zone/releases/tag/v.1.0.1-tortoise)
+Tortoise: Latest release [v1.1](https://github.com/eott/warp-zone/releases/tag/v1.1-tortoise)
