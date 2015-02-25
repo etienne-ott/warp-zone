@@ -4,7 +4,7 @@
         <meta charset="utf-8"/>
         <title>Warp zone</title>
         <link rel="icon" type="image/png" href="favicon.png"/>
-        <link href="styles/default-style.css" rel="stylesheet" type="text/css"/>
+        <link href="styles/<%ph id="activeTheme" %>.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body>
@@ -41,6 +41,19 @@
             <a href="generate_index.php">
                 <div class="actionButton" id="rebuildPage">Rebuild</div>
             </a>
+
+            <form id="themeForm" method="post" action="generate_index.php">
+                <div class="inputField">
+                    <span class="inputLabel">Pick theme</span><br/>
+                    <select class="selectInput" name="theme">
+                        <%ph id="themeOptions" %>
+                    </select>
+                </div>
+
+                <a href="generate_index.php">
+                    <input class="submitButton actionButton" type="submit" name="submit" value="Apply"/>
+                </a>
+            </form>
         </div>
 
         <div id="content">

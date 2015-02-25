@@ -21,9 +21,10 @@ define("SECTIONS_FILENAME", 'sections.csv');
  * Rebuilds the index.html file and compiles all LESS style files
  * to CSS.
  *
+ * @param array A map of settings with the same structure as the config file
  * @return array A list of error messages if errors occurred during execution
  */
-function rebuildMain() {
+function rebuildMain($settings) {
     $errors = array();
 
     try {
@@ -35,8 +36,13 @@ function rebuildMain() {
         $entries = Entry::readFromCsvFile(ENTRIES_FILENAME);
         $entriesHtml = ElementFormat::formatEntries($entries, $sections);
 
+        $themes = glob('styles/*.less');
+        $themesHtml = ElementFormat::formatThemeOptions($themes, $settings);
+
         $html = $template->replace("columns", $entriesHtml)
             ->replace("selectOptions", $optionsHtml)
+            ->replace("themeOptions", $themesHtml)
+            ->replace("activeTheme", $settings['Theme']['active_theme'])
             ->render();
         file_put_contents("index.html", $html);
     } catch (Exception $e) {
@@ -64,8 +70,20 @@ function rebuildMain() {
  * @param array $data The POST data
  * @return boolean True, if there is relevant POST data, false otherwise
  */
-function hasRelevantPostData($data) {
+function hasRelevantContentData($data) {
     return isset($data['submit']) && (!empty($data['url']) || !empty($data['newSection']));
+}
+
+/**
+ * Returns if the given array contains POST data relevant for the theme
+ * selection. It is assumed that the given array has the same
+ * structure as the global $_POST.
+ *
+ * @param array $data The POST data
+ * @return boolean True, if there is relevant POST data, false otherwise
+ */
+function hasRelevantThemeData($data) {
+    return !empty($data['theme']);
 }
 
 /**
@@ -127,6 +145,39 @@ function checkAndAddNewSection($data) {
     return $errors;
 }
 
+/**
+ * Update the theme settings for the given POST data and settings array.
+ * Saves the selected theme in the config file and changes the theme
+ * in the given settings array.
+ *
+ * @param array $data The POST data
+ * @param array &$settings The settings array to update
+ * @return array A list of error messages if errors occured during execution
+ */
+function updateThemeSettings($data, &$settings) {
+    $errors = array();
+
+    try {
+        $iniContent = file_get_contents('config.ini');
+        $iniContent = preg_replace(
+            '#active_theme\s*=.*#',
+            'active_theme = "' . $data['theme'] . '"',
+            $iniContent
+        );
+        file_put_contents('config.ini', $iniContent);
+    } catch (Exception $e) {
+        $errors[] = sprintf("Could not update ini file: %s\n", $e->getMessage());
+    }
+
+    if (isset($settings['Theme']['active_theme'])) {
+        $settings['Theme']['active_theme'] = $data['theme'];
+    } else {
+        $errors[] = sprintf("Did not find setting active_theme in section theme to update.\n");
+    }
+
+    return $errors;
+}
+
 // Now, do the thing
 
 $errors = array();
@@ -139,12 +190,22 @@ if (!file_exists(SECTIONS_FILENAME)) {
     file_put_contents(SECTIONS_FILENAME, implode(CSV_SEP_CHAR, Section::$fields) . PHP_EOL);
 }
 
-if (hasRelevantPostData($_POST)) {
+if (!file_exists('config.ini')) {
+    copy('config-default.ini', 'config.ini');
+}
+
+$settings = parse_ini_file('config.ini', true);
+
+if (hasRelevantContentData($_POST)) {
     $errors = array_merge($errors, checkAndAddNewSection($_POST));
     $errors = array_merge($errors, createOrUpdateEntry($_POST));
 }
 
-$errors = array_merge($errors, rebuildMain());
+if (hasRelevantThemeData($_POST)) {
+    $errors = array_merge($errors, updateThemeSettings($_POST, $settings));
+}
+
+$errors = array_merge($errors, rebuildMain($settings));
 
 // Not all errors are caught by try-catch, therefore we also check for any premature
 // output to check if something went wrong
