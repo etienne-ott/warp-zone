@@ -103,7 +103,7 @@ function createOrUpdateEntry($data) {
             'url' => $data['url'],
             'section' => empty($data['newSection']) ? $data['section'] : $data['newSection'],
             'displayName' => empty($data['displayName']) ? $data['url'] : $data['displayName'],
-            'weight' => 0
+            'priority' => 0,
         ));
 
         $entries = Entry::readFromCsvFile(ENTRIES_FILENAME);
@@ -132,7 +132,7 @@ function checkAndAddNewSection($data) {
         $name = empty($data['newSection']) ? $data['section'] : $data['newSection'];
         $section = Section::createFromArray(array(
             'name' => $name,
-            'weight' => 0
+            'priority' => 0,
         ));
 
         $sections = Section::readFromCsvFile(SECTIONS_FILENAME);

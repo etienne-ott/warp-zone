@@ -7,15 +7,15 @@
 class ElementFormat {
     /**
      * Returns a function used in sorting functions to sort objects by their
-     * weight. Assumes the objects have a public field named "weight",
-     * otherwise assumes they have a weight of 0.
+     * priority. Assumes the objects have a public field named "priority",
+     * otherwise assumes they have a priority of 0.
      *
      * @return function A function used in sorting function such as uasort()
      */
-    public static function getWeightSortFunction() {
+    public static function getPrioritySortFunction() {
         return function($a, $b) {
-            return (isset($a->weight) ? $a->weight : 0)
-                - (isset($b->weight) ? $b->weight : 0);
+            return (isset($b->priority) ? $b->priority : 0)
+                - (isset($a->priority) ? $a->priority : 0);
         };
     }
 
@@ -38,13 +38,13 @@ class ElementFormat {
                 . '<ul class="entryList">' . PHP_EOL;
         };
 
-        uasort($sections, self::getWeightSortFunction());
+        uasort($sections, self::getPrioritySortFunction());
 
         foreach ($sections as $section) {
             $tables[$section->name] = $sectionHeader($section->name);
         }
 
-        uasort($entries, self::getWeightSortFunction());
+        uasort($entries, self::getPrioritySortFunction());
 
         foreach($entries as $entry) {
             if (!isset($tables[$entry->section])) {
@@ -70,7 +70,7 @@ class ElementFormat {
      * @return string The formatted HTML structure
      */
     public static function formatOptions($sections) {
-        uasort($sections, self::getWeightSortFunction());
+        uasort($sections, self::getPrioritySortFunction());
 
         $html = '<option class="selectOption" value="' . DEFAULT_COLUMN . '">&nbsp;</option>' . PHP_EOL;
         foreach ($sections as $section) {

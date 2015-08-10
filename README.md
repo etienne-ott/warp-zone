@@ -13,7 +13,7 @@ dedication to the jQuery gods.
 ### Features implemented(~) and planned(+) in no particular order
 * ~ Display of existing entries
 * ~ Form to create new entries/sections
-* ~ Sorting of entries and sections by weight
+* ~ Sorting of entries and sections by priority
 * + Theme-picker with various color/size themes
 * + In-page editing of entries
 * + In-page editing of entry/section order

@@ -1,6 +1,6 @@
 <?php
 /**
- * Represents an entry containing data for an URL (e.g. name, weight, etc.)
+ * Represents an entry containing data for an URL (e.g. name, priority, etc.)
  * and provides functionality to read/write and manipulate entries.
  */
 class Entry {
@@ -11,7 +11,7 @@ class Entry {
         "url",         // URL of the link
         "displayName", // A name displayed instead of the raw URL
         "section",     // The name of the section
-        "weight"       // Entries are sorted by ascending weight
+        "priority",    // Entries are sorted by descending priority
     );
 
     /**
@@ -86,7 +86,7 @@ class Entry {
                 $headerMap['url'] => $entry->url,
                 $headerMap['displayName'] => $entry->displayName,
                 $headerMap['section'] => $entry->section,
-                $headerMap['weight'] => $entry->weight
+                $headerMap['priority'] => $entry->priority,
             ));
         }
 

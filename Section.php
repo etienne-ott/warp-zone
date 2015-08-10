@@ -9,7 +9,7 @@ class Section {
      */
     public static $fields = array(
         "name",  // Name of the section
-        "weight" // Sections are sorted by ascending weight
+        "priority" // Sections are sorted by descending priority
     );
 
     /**
@@ -104,7 +104,7 @@ class Section {
         foreach ($sections as $section) {
             fputcsv($handle, array(
                 $headerMap['name'] => $section->name,
-                $headerMap['weight'] => $section->weight
+                $headerMap['priority'] => $section->priority
             ));
         }
 
