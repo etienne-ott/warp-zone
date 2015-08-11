@@ -49,8 +49,8 @@ function rebuildMain($settings) {
         $errors[] = sprintf("Could not build index: %s\n", $e->getMessage());
     }
 
-    $lessCompiler = new lessc();
     foreach (glob('styles/*.less') as $filename) {
+        $lessCompiler = new lessc();
         $cssFilename = substr($filename, 0, strlen($filename) - 4) . 'css';
         try {
             $lessCompiler->compileFile($filename, $cssFilename);
