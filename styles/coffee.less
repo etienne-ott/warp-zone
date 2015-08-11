@@ -1,0 +1,37 @@
+@import 'default-style.less';
+
+@colorBrown: #6c4410;
+@colorDarkBrown: #392405;
+@colorCreamTransparent: rgba(243, 220, 181, 0.50);
+@colorOrange: #FE7B00;
+@colorPaleOrange: #ECB076;
+@colorDarkPaleOrange: #B37B46;
+
+@headerFontColor: @colorWhite;
+@headerBackground: @colorBrown;
+@contentFontColor: @colorWhite;
+@contentBackground: @colorDarkBrown;
+@footerFontColor: @colorWhite;
+@footerBackground: @colorBrown;
+@entryWrapperBorder: @colorCreamTransparent;
+
+html {
+    font-family: arial;
+
+    #content .entryListWrapper {
+        border: 1px solid @entryWrapperBorder;
+        box-shadow: 0 0 4px 4px @entryWrapperBorder;
+    }
+
+    a:link {
+        color: @colorPaleOrange;
+    }
+
+    a:visited {
+        color: @colorDarkPaleOrange;
+    }
+
+    a:hover, a:active {
+        color: @colorOrange;
+    }
+}
