@@ -1,0 +1,37 @@
+@import 'default-style.less';
+
+@colorAlmostWhitePink: #fdfafc;
+@colorHighTransparentPink: rgba(213, 122, 186, 0.25);
+@colorPastelYellow: #fff3c6;
+@colorPastelBlue: #55d1ea;
+@colorPastelGreen: #1eb995;
+@colorLightPastelGreen: #61caba;
+
+@headerFontColor: @colorPastelBlue;
+@headerBackground: @colorPastelYellow;
+@contentFontColor: @colorPastelBlue;
+@contentBackground: @colorAlmostWhitePink;
+@footerFontColor: @colorPastelBlue;
+@footerBackground: @colorPastelYellow;
+@entryWrapperBorder: @colorHighTransparentPink;
+
+html {
+    font-family: arial;
+
+    #content .entryListWrapper {
+        border: 1px solid @entryWrapperBorder;
+        box-shadow: 0 0 4px 4px @entryWrapperBorder;
+    }
+
+    a:link {
+        color: @colorLightPastelGreen;
+    }
+
+    a:visited {
+        color: @colorPastelGreen;
+    }
+
+    a:hover, a:active {
+        color: @colorPastelBlue;;
+    }
+}
