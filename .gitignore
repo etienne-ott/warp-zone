@@ -1,4 +1,38 @@
+# PhpStorm
+.idea/
+
+# Eclipse
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+*.launch
+
+# Zend Studio
+.zfproject.xml
+
+# Netbeans
+nbproject/
+
+# Sublime
+sftp-config.json
+*.sublime-project
+*.sublime-workspace
+
+# Generated files
 *.csv
 styles/*.css
 index.html
+
+# Working config file (default remains under VC)
 config.ini

@@ -1,0 +1,13 @@
+RewriteEngine On
+
+# If a file, just serve it
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+
+# Everything else, except assets styles and scripts, gets piped through to index.php
+RewriteCond %{REQUEST_URI} !/assets/.*$
+RewriteCond %{REQUEST_URI} !/styles/.*$
+RewriteCond %{REQUEST_URI} !/scripts/.*$
+RewriteRule ^.*$ index.php [NC,L]

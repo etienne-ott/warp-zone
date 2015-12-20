@@ -1,0 +1,10 @@
+{
+    "name": "wiethe/glossary",
+    "description": "Wiethe Glossary",
+    "config": {
+        "vendor-dir": "library/vendor"
+    },
+    "require": {
+        "slim/slim": "2.6.2"
+    }
+}
