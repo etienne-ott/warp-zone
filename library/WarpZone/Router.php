@@ -24,7 +24,7 @@ class Router
         return array(
             array(
                 'pattern'    => '/',
-                'template'   => 'index.phtml',
+                'template'   => 'generated.phtml',
                 'controller' => 'WarpZone\Controller\Index',
                 'action'     => 'index',
             ),

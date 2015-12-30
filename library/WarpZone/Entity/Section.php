@@ -1,9 +1,15 @@
 <?php
+namespace WarpZone;
+
+use WarpZone\Exception\FileNotFound;
 /**
  * Represents a section by which entries are grouped and provides functionality
  * to read/write and manipulate sections.
  */
-class Section {
+class Section
+{
+    const CSV_SEP_CHAR = ",";
+
     /**
      * @var array $fields A list of fields the class uses.
      */
@@ -22,7 +28,7 @@ class Section {
      * @return Section The created section
      */
     public static function createfromArray($arr) {
-        $section = new Section();
+        $section = new self();
         foreach (self::$fields as $fieldName) {
             if (isset($arr[$fieldName])) {
                 $section->$fieldName = $arr[$fieldName];
@@ -44,18 +50,18 @@ class Section {
     public static function readFromCsvFile($filename) {
         $handle = fopen($filename, "r");
         if ($handle === FALSE) {
-            throw new FileNotFoundException("Could not find or open file: $filename");
+            throw new FileNotFound("Could not find or open file: $filename");
         }
 
-        $headers = fgetcsv($handle, 0, CSV_SEP_CHAR);
+        $headers = fgetcsv($handle, 0, self::CSV_SEP_CHAR);
         $sections = array();
 
-        while (($data = fgetcsv($handle, 0, CSV_SEP_CHAR)) !== FALSE) {
+        while (($data = fgetcsv($handle, 0, self::CSV_SEP_CHAR)) !== FALSE) {
             $arr = array();
             for ($i = 0; $i < count($data); $i++) {
                 $arr[$headers[$i]] = $data[$i];
             }
-            $sections[] = Section::createFromArray($arr);
+            $sections[] = self::createFromArray($arr);
         }
 
         fclose($handle);
@@ -95,7 +101,7 @@ class Section {
     public static function writeToCsvFile($filename, $sections) {
         $handle = fopen($filename, "w");
         if ($handle === FALSE) {
-            throw new FileNotFoundException("Could not find or open file: $filename");
+            throw new FileNotFound("Could not find or open file: $filename");
         }
 
         fputcsv($handle, self::$fields);

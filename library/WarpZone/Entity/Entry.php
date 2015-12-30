@@ -1,9 +1,15 @@
 <?php
+namespace WarpZone;
+
+use WarpZone\Exception\FileNotFound;
 /**
  * Represents an entry containing data for an URL (e.g. name, priority, etc.)
  * and provides functionality to read/write and manipulate entries.
  */
-class Entry {
+class Entry
+{
+    const CSV_SEP_CHAR = ",";
+
     /**
      * @var array $fields A list of fields the class uses.
      */
@@ -24,7 +30,7 @@ class Entry {
      * @return Entry The created entry
      */
     public static function createfromArray($arr) {
-        $entry = new Entry();
+        $entry = new self();
         foreach (self::$fields as $fieldName) {
             if (isset($arr[$fieldName])) {
                 $entry->$fieldName = $arr[$fieldName];
@@ -46,18 +52,18 @@ class Entry {
     public static function readFromCsvFile($filename) {
         $handle = fopen($filename, "r");
         if ($handle === FALSE) {
-            throw new FileNotFoundException("Could not find or open file: $filename");
+            throw new FileNotFound("Could not find or open file: $filename");
         }
 
-        $headers = fgetcsv($handle, 0, CSV_SEP_CHAR);
+        $headers = fgetcsv($handle, 0, self::CSV_SEP_CHAR);
         $entries = array();
 
-        while (($data = fgetcsv($handle, 0, CSV_SEP_CHAR)) !== FALSE) {
+        while (($data = fgetcsv($handle, 0, self::CSV_SEP_CHAR)) !== FALSE) {
             $arr = array();
             for ($i = 0; $i < count($data); $i++) {
                 $arr[$headers[$i]] = $data[$i];
             }
-            $entries[] = Entry::createFromArray($arr);
+            $entries[] = self::createFromArray($arr);
         }
 
         fclose($handle);
@@ -75,7 +81,7 @@ class Entry {
     public static function writeToCsvFile($filename, $entries) {
         $handle = fopen($filename, "w");
         if ($handle === FALSE) {
-            throw new FileNotFoundException("Could not find or open file: $filename");
+            throw new FileNotFound("Could not find or open file: $filename");
         }
 
         fputcsv($handle, self::$fields);

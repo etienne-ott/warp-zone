@@ -1,6 +1,7 @@
 <?php
-include_once "Exceptions.php";
+namespace WarpZone;
 
+use WarpZone\Exception\FileNotFound;
 /**
  * A class to wrap around text content containing placeholders that can be
  * identified and replaced by a given ID.
@@ -29,7 +30,7 @@ class Template {
      */
     public function __construct($filename) {
         if (!file_exists($filename)) {
-            throw new FileNotFoundException("Could not find template file: $filename");
+            throw new FileNotFound("Could not find template file: $filename");
         }
         $this->html = file_get_contents($filename);
     }

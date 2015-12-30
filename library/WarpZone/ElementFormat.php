@@ -1,10 +1,15 @@
 <?php
+namespace WarpZone;
+
 /**
  * Provides functionality to render/format given elements as HTML structures.
  * For example a list of Entry instances could be rendered as HTML lists with
  * each entry as a list item.
  */
-class ElementFormat {
+class ElementFormat
+{
+    const DEFAULT_COLUMN = 'Read later';
+
     /**
      * Returns a function used in sorting functions to sort objects by their
      * priority. Assumes the objects have a public field named "priority",
@@ -72,7 +77,7 @@ class ElementFormat {
     public static function formatOptions($sections) {
         uasort($sections, self::getPrioritySortFunction());
 
-        $html = '<option class="selectOption" value="' . DEFAULT_COLUMN . '">&nbsp;</option>' . PHP_EOL;
+        $html = '<option class="selectOption" value="' . self::DEFAULT_COLUMN . '">&nbsp;</option>' . PHP_EOL;
         foreach ($sections as $section) {
             $html .= '<option class="selectOption" value="' . $section->name . '">' . $section->name . '</option>' . PHP_EOL;
         }
