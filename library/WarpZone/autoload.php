@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Register an autoloader for glossary classed by their namespace.
+ * Register an autoloader for WarpZone classes by their namespace.
  *
  * @todo Use a generated classmap here; also support multiple/internal classes
  *    in one file
