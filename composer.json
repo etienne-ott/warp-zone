@@ -1,10 +1,11 @@
 {
-    "name": "wiethe/glossary",
-    "description": "Wiethe Glossary",
+    "name": "warp-zone",
+    "description": "Warp Zone, a customizable target for your browser's homepage and new tab page.",
     "config": {
         "vendor-dir": "library/vendor"
     },
     "require": {
-        "slim/slim": "2.6.2"
+        "slim/slim": "2.6.2",
+        "leafo/lessphp": "0.4.0"
     }
 }
