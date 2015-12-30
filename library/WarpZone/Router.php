@@ -1,5 +1,5 @@
 <?php
-namespace Glossary;
+namespace WarpZone;
 
 class Router
 {
@@ -25,27 +25,10 @@ class Router
             array(
                 'pattern'    => '/',
                 'template'   => 'index.phtml',
-                'controller' => 'Glossary\Controller\Index',
+                'controller' => 'WarpZone\Controller\Index',
                 'action'     => 'index',
             ),
-            array(
-                'pattern'    => '/definition',
-                'template'   => 'definition.phtml',
-                'controller' => 'Glossary\Controller\Definition',
-                'action'     => 'index',
-            ),
-            array(
-                'pattern'    => '/definition/:term',
-                'template'   => 'definition.phtml',
-                'controller' => 'Glossary\Controller\Definition',
-                'action'     => 'define',
-            ),
-            array(
-                'pattern'    => '/definition/ajax/:term',
-                'template'   => 'definition.phtml',
-                'controller' => 'Glossary\Controller\Definition',
-                'action'     => 'ajax',
-            ),
+
         );
     }
 }

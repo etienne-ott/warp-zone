@@ -14,16 +14,16 @@ defined('APPLICATION_ENV')
 
 // Register autoloaders
 require 'library/vendor/autoload.php';
-require 'library/Glossary/autoload.php';
+require 'library/WarpZone/autoload.php';
 
 // Bootstrap the Slim app
 $app = new \Slim\Slim(array(
     'templates.path' => './templates',
-    'view'           => new \Glossary\View(),
+    'view'           => new \WarpZone\View(),
 ));
 
 // Add the routes to the app
-$router = new \Glossary\Router();
+$router = new \WarpZone\Router();
 foreach ($router->getRoutes() as $route) {
     $app->map($route['pattern'], function() use ($app, $route) {
         // Check if the given controller needs to do something

@@ -1,5 +1,5 @@
 <?php
-namespace Glossary\Controller;
+namespace WarpZone\Controller;
 
 /**
  * Used for request handling and work with the MVC pattern. The controller

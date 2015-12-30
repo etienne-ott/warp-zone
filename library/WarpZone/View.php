@@ -1,19 +1,19 @@
 <?php
-namespace Glossary;
+namespace WarpZone;
 
 class View extends \Slim\View
 {
     /**
      * @var string The base URL of our application.
      */
-    protected $_baseUrl = '/glossary';
+    protected $_baseUrl = '/warp-zone';
 
     /**
      * @see \Slim\View::render()
      */
-    public function render($template)
+    public function render($template, $data = null)
     {
-        return parent::render($template);
+        return parent::render($template, $data);
     }
 
     /**
