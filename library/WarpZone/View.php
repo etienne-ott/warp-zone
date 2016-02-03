@@ -6,7 +6,7 @@ class View extends \Slim\View
     /**
      * @var string The base URL of our application.
      */
-    protected $_baseUrl = '/warp-zone';
+    protected $_baseUrl = null;
 
     /**
      * @see \Slim\View::render()
@@ -14,6 +14,33 @@ class View extends \Slim\View
     public function render($template, $data = null)
     {
         return parent::render($template, $data);
+    }
+
+    /**
+     * Returns the base URL used for constructing relative URI paths. Lazy-loads
+     * the base URL from the app config if it is not set.
+     *
+     * @return string The base URL
+     */
+    public function getBaseUrl()
+    {
+        if ($this->_baseUrl === null) {
+            $config = \Slim\Slim::getInstance()->config('settings');
+            $this->_baseUrl = $config['App']['base_url'];
+        }
+        return $this->_baseUrl;
+    }
+
+    /**
+     * Sets the base URL to the given value.
+     *
+     * @param string $url The base URL
+     * @return $this
+     */
+    public function setBaseUrl($url)
+    {
+        $this->_baseUrl = $url;
+        return $this;
     }
 
     /**
@@ -47,5 +74,22 @@ class View extends \Slim\View
         }
 
         return $this->_baseUrl . ($slash ? '' : '/') . $route;
+    }
+
+    /**
+     * Returns the javascript code that should be included in the view content
+     * the script files are bound externally. This is useful and necessary
+     * because these scripts might require installation or request specific data,
+     * such as the base URL of the installation or user data.
+     *
+     * @return string The javascript code to be inline before the script files
+     */
+    public function getInlineJavascript()
+    {
+        // Various settings
+        $js = sprintf("var settings = function() {
+            this.system = {}
+            this.system.baseUrl = '%s'
+        }", $this->url('/'));
     }
 }

@@ -6,6 +6,9 @@
     },
     "require": {
         "slim/slim": "2.6.2",
-        "leafo/lessphp": "0.4.0"
+        "leafo/lessphp": "0.4.0",
+        "phpunit/phpunit": "4.8.*",
+        "doctrine/common": "2.5.*",
+        "doctrine/dbal": "2.5.*"
     }
 }

@@ -31,4 +31,28 @@ class Router
 
         );
     }
+
+    /**
+     * Callback method when a matching route was found and should
+     * now be rendered. The given route should be of the same structure as
+     * the return values of WarpZone\Router::getRoutes().
+     *
+     * @param array $route The matching route as associative array as in
+     *    WarpZone\Router::getRoutes()
+     * @param array $params The route parameters structured as in func_get_args()
+     */
+    public function routeCallback(array $route, array $params)
+    {
+        $app = \Slim\Slim::getInstance();
+
+        // Check if the given controller needs to do something
+        if (!empty($route['controller'])) {
+            $action     = isset($route['action']) ? $route['action'] : 'index';
+            $controller = new $route['controller']($app->view());
+            $controller->action($action, $params);
+        }
+
+        // Render the template
+        $app->render($route['template']);
+    }
 }
