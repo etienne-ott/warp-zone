@@ -33,6 +33,7 @@ sftp-config.json
 *.csv
 styles/*.css
 index.html
+templates/generated.phtml
 
 # Working config file (default remains under VC)
 config.ini
