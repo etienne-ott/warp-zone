@@ -13,25 +13,21 @@
             <h3 class="headerTitle">Warp zone</h3>
             <form id="entryForm" method="post" action="<?php echo $this->url('rebuild'); ?>">
                 <div class="inputField">
-                    <span class="inputLabel">URL</span><br/>
-                    <input class="textInput" type="text" name="url"/>
+                    <input class="textInput" type="text" name="url" placeholder="URL"/>
                 </div>
 
                 <div class="inputField">
-                    <span class="inputLabel">Name</span><br/>
-                    <input class="textInput" type="text" name="displayName"/>
+                    <input class="textInput" type="text" name="displayName" placeholder="Name"/>
                 </div>
 
                 <div class="inputField">
-                    <span class="inputLabel">Section</span><br/>
                     <select class="selectInput" name="section">
                         <%ph id="selectOptions"%>
                     </select>
                 </div>
 
                 <div class="inputField">
-                    <span class="inputLabel">or: New section</span><br/>
-                    <input class="textInput" name="newSection" />
+                    <input class="textInput" name="newSection" placeholder="or: New section"/>
                 </div>
 
                 <div class="inputField">
@@ -45,7 +41,6 @@
 
             <form id="themeForm" method="post" action="<?php echo $this->url('changeTheme'); ?>">
                 <div class="inputField">
-                    <span class="inputLabel">Pick theme</span><br/>
                     <select class="selectInput" name="theme">
                         <%ph id="themeOptions" %>
                     </select>

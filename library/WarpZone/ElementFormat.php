@@ -77,7 +77,7 @@ class ElementFormat
     public static function formatOptions($sections) {
         uasort($sections, self::getPrioritySortFunction());
 
-        $html = '<option class="selectOption" value="' . self::DEFAULT_COLUMN . '">&nbsp;</option>' . PHP_EOL;
+        $html = '<option class="selectOption" value="' . self::DEFAULT_COLUMN . '">- Default section -</option>' . PHP_EOL;
         foreach ($sections as $section) {
             $html .= '<option class="selectOption" value="' . $section->name . '">' . $section->name . '</option>' . PHP_EOL;
         }
