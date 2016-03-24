@@ -1,7 +1,7 @@
 <?php
-namespace WarpZone;
+namespace WarpZone\Exception;
 
-class FileNotFound extends Exception
+class FileNotFound extends \Exception
 {
     public function __construct($message)
     {

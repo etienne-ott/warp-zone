@@ -30,7 +30,7 @@ class Template {
      */
     public function __construct($filename) {
         if (!file_exists($filename)) {
-            throw new FileNotFound("Could not find template file: $filename");
+            throw new \WarpZone\Exception\FileNotFound("Could not find template file: $filename");
         }
         $this->html = file_get_contents($filename);
     }
