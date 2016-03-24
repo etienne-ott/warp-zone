@@ -11,7 +11,7 @@
     <body>
         <div id="header">
             <h3 class="headerTitle">Warp zone</h3>
-            <form id="entryForm" method="post" action="generate_index.php">
+            <form id="entryForm" method="post" action="<?php echo $this->url('rebuild'); ?>">
                 <div class="inputField">
                     <span class="inputLabel">URL</span><br/>
                     <input class="textInput" type="text" name="url"/>
@@ -39,11 +39,11 @@
                 </div>
             </form>
 
-            <a href="generate_index.php">
+            <a href="<?php echo $this->url('rebuild'); ?>">
                 <div class="actionButton" id="rebuildPage">Rebuild</div>
             </a>
 
-            <form id="themeForm" method="post" action="generate_index.php">
+            <form id="themeForm" method="post" action="<?php echo $this->url('changeTheme'); ?>">
                 <div class="inputField">
                     <span class="inputLabel">Pick theme</span><br/>
                     <select class="selectInput" name="theme">
@@ -51,8 +51,6 @@
                     </select>
                 </div>
 
-                <a href="generate_index.php">
-                    <input class="submitButton actionButton" type="submit" name="submit" value="Apply"/>
-                </a>
+                <input class="submitButton actionButton" type="submit" name="submit" value="Apply"/>
             </form>
         </div>
