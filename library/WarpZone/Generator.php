@@ -25,7 +25,7 @@ class Generator
         $errors = array();
 
         try {
-            $template = new Template(APPLICATION_PATH . '/templates/index.phtml');
+            $template = new Template('index.phtml');
             
             $sections = Section::readFromCsvFile(self::SECTIONS_FILENAME);
             $optionsHtml = ElementFormat::formatOptions($sections);

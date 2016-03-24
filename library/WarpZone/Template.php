@@ -26,13 +26,17 @@ class Template {
     /**
      * Constructs a new instance from the given file.
      * 
-     * @param string $filename The path and name of the file to load.
+     * @param string $filename The name of the template file to load
      */
     public function __construct($filename) {
-        if (!file_exists($filename)) {
+        if (!file_exists(APPLICATION_PATH . '/templates/' . $filename)) {
             throw new \WarpZone\Exception\FileNotFound("Could not find template file: $filename");
         }
-        $this->html = file_get_contents($filename);
+
+        $app = \Slim\Slim::getInstance();
+        ob_start();
+        $app->render($filename);
+        $this->html = ob_get_clean();
     }
 
     /**
