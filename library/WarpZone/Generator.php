@@ -3,8 +3,8 @@ namespace WarpZone;
 
 use WarpZone\Template,
     WarpZone\Exception\FileNotFound,
-    WarpZone\Entry,
-    WarpZone\Section,
+    WarpZone\Entity\Entry,
+    WarpZone\Entity\Section,
     WarpZone\ElementFormat,
     lessc;
 
@@ -41,7 +41,7 @@ class Generator
                 ->replace("themeOptions", $themesHtml)
                 ->replace("activeTheme", $settings['Theme']['active_theme'])
                 ->render();
-            file_put_contents(APPLICATION_PATH . "/template/generated.phtml", $html);
+            file_put_contents(APPLICATION_PATH . "/templates/generated.phtml", $html);
         } catch (Exception $e) {
             $errors[] = sprintf("Could not generate: %s\n", $e->getMessage());
         }

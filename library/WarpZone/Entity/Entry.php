@@ -1,5 +1,5 @@
 <?php
-namespace WarpZone;
+namespace WarpZone\Entity;
 
 use WarpZone\Exception\FileNotFound;
 /**
