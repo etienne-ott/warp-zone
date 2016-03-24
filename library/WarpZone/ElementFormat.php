@@ -88,7 +88,7 @@ class ElementFormat
     /**
      * Formats each theme filename as <option> for the theme select field
      * with the name of the theme both as value and label. This method
-     * automatically removes any ".less" and "styles/" occurences.
+     * automatically removes anything that looks like a path or extension.
      * 
      * @param array $themes A list of theme filenames
      * @param array $settings A map of settings
@@ -98,8 +98,11 @@ class ElementFormat
         $html = "";
 
         foreach ($themes as $filename) {
-            $name = str_replace('styles/', '', $filename);
-            $name = str_replace('.less', '', $name);
+            $name  = str_replace('\\', '/', $filename);
+            $parts = explode('/', $name);
+            $name  = end($parts);
+            $parts = explode('.', $name);
+            $name  = reset($parts);
             $html .= '<option class="selectOption" '
                 . ($settings['Theme']['active_theme'] == $name ? 'selected="true" ' : '')
                 . 'value="' . $name . '">' . $name . '</option>' . PHP_EOL;
