@@ -28,7 +28,12 @@ class Router
                 'controller' => 'WarpZone\Controller\Index',
                 'action'     => 'index',
             ),
-
+            array(
+                'pattern'    => '/rebuild',
+                'template'   => '',
+                'controller' => 'WarpZone\Controller\Generation',
+                'action'     => 'rebuild',
+            ),
         );
     }
 
