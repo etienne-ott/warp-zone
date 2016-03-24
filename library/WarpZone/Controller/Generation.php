@@ -13,6 +13,15 @@ class Generation extends \WarpZone\Controller\AbstractController
      */
     public function rebuildAction($args)
     {
+        $generator = new \WarpZone\Generator();
+        $settings  = \Slim\Slim::getInstance()->config('settings');
+        $errors    = $generator->rebuildMain($settings);
 
+        if (!empty($errors)) {
+            // Eventually we will add the errors to a flash messenger and display
+            // them on the redirected page, but for now there's no such thing
+        }
+
+        $this->redirect('/');
     }
 }
