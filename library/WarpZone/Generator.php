@@ -25,7 +25,7 @@ class Generator
         $errors = array();
 
         try {
-            $template = new Template(APPLICATION_PATH . 'templates/index.phtml');
+            $template = new Template(APPLICATION_PATH . '/templates/index.phtml');
             
             $sections = Section::readFromCsvFile(self::SECTIONS_FILENAME);
             $optionsHtml = ElementFormat::formatOptions($sections);
@@ -33,7 +33,7 @@ class Generator
             $entries = Entry::readFromCsvFile(self::ENTRIES_FILENAME);
             $entriesHtml = ElementFormat::formatEntries($entries, $sections);
 
-            $themes = glob(APPLICATION_PATH . 'styles/*.less');
+            $themes = glob(APPLICATION_PATH . '/styles/*.less');
             $themesHtml = ElementFormat::formatThemeOptions($themes, $settings);
 
             $html = $template->replace("columns", $entriesHtml)
@@ -41,12 +41,12 @@ class Generator
                 ->replace("themeOptions", $themesHtml)
                 ->replace("activeTheme", $settings['Theme']['active_theme'])
                 ->render();
-            file_put_contents(APPLICATION_PATH . "template/generated.phtml", $html);
+            file_put_contents(APPLICATION_PATH . "/template/generated.phtml", $html);
         } catch (Exception $e) {
             $errors[] = sprintf("Could not generate: %s\n", $e->getMessage());
         }
 
-        foreach (glob(APPLICATION_PATH . 'styles/*.less') as $filename) {
+        foreach (glob(APPLICATION_PATH . '/styles/*.less') as $filename) {
             $lessCompiler = new lessc();
             $cssFilename = substr($filename, 0, strlen($filename) - 4) . 'css';
             try {
@@ -155,13 +155,13 @@ class Generator
         $errors = array();
 
         try {
-            $iniContent = file_get_contents(APPLICATION_PATH . 'config.ini');
+            $iniContent = file_get_contents(APPLICATION_PATH . '/config.ini');
             $iniContent = preg_replace(
                 '#active_theme\s*=.*#',
                 'active_theme = "' . $data['theme'] . '"',
                 $iniContent
             );
-            file_put_contents(APPLICATION_PATH . 'config.ini', $iniContent);
+            file_put_contents(APPLICATION_PATH . '/config.ini', $iniContent);
         } catch (Exception $e) {
             $errors[] = sprintf("Could not update ini file: %s\n", $e->getMessage());
         }
@@ -183,28 +183,30 @@ class Generator
 
         $errors = array();
 
-        if (!file_exists(self::ENTRIES_FILENAME)) {
+        $path = APPLICATION_PATH . '/' . self::ENTRIES_FILENAME;
+        if (!file_exists($path)) {
             file_put_contents(
-                APPLICATION_PATH . self::ENTRIES_FILENAME,
+                $path,
                 implode(self::CSV_SEP_CHAR, Entry::$fields) . PHP_EOL
             );
         }
 
-        if (!file_exists(self::SECTIONS_FILENAME)) {
+        $path = APPLICATION_PATH . '/' . self::SECTIONS_FILENAME;
+        if (!file_exists($path)) {
             file_put_contents(
-                APPLICATION_PATH . self::SECTIONS_FILENAME,
+                $path,
                 implode(self::CSV_SEP_CHAR, Section::$fields) . PHP_EOL
             );
         }
 
-        if (!file_exists(APPLICATION_PATH . 'config.ini')) {
+        if (!file_exists(APPLICATION_PATH . '/config.ini')) {
             copy(
-                APPLICATION_PATH . 'config-default.ini',
-                APPLICATION_PATH . 'config.ini'
+                APPLICATION_PATH . '/config-default.ini',
+                APPLICATION_PATH . '/config.ini'
             );
         }
 
-        $settings = parse_ini_file(APPLICATION_PATH . 'config.ini', true);
+        $settings = parse_ini_file(APPLICATION_PATH . '/config.ini', true);
 
         if ($this->hasRelevantContentData($_POST)) {
             $errors = array_merge($errors, $this->checkAndAddNewSection($_POST));
