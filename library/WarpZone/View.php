@@ -73,7 +73,7 @@ class View extends \Slim\View
             $slash = true;
         }
 
-        return $this->_baseUrl . ($slash ? '' : '/') . $route;
+        return $this->getBaseUrl() . ($slash ? '' : '/') . $route;
     }
 
     /**
