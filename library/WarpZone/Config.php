@@ -39,6 +39,38 @@ class Config
     }
 
     /**
+     * Writes the settings of the Config instance to the given file in the ini file
+     * format. Note that regular ini files as understood by PHP's ini file functions
+     * do not support nested sections, so this method does not handle them either.
+     *
+     * @param string $filename The filename of the ini file to write
+     * @throws \Exception when the given file could not be opened for writing
+     */
+    public function writeToIniFile($filename)
+    {
+        $fileHandle = fopen($filename, 'w');
+        if (!$fileHandle) {
+            throw new \Exception("Could not open given filename $filename for writing.");
+        }
+
+        foreach ($this->config as $key => $value) {
+            fwrite($fileHandle, sprintf("[%s]\n", $key));
+            if (is_array($value)) {
+                foreach ($value as $innerKey => $innerValue) {
+                    // Ini files do not support nested sections, so we don't have
+                    // to check for a depper hierachy at this point.
+                    fwrite($fileHandle, sprintf("%s = \"%s\"\n", $innerKey, $innerValue));
+                }
+            } else {
+                fwrite($fileHandle, sprintf("%s = \"%s\"\n", $key, $value));
+            }
+            fwrite($fileHandle, "\n");
+        }
+
+        fclose($fileHandle);
+    }
+
+    /**
      * Returns the value of the setting with the given name. If it a nested
      * hierarchy, and the value therefore contains more key<->value pairs,
      * returns the sub-config as instance of \WarpZone\Config, to enable
