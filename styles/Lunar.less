@@ -1,37 +1,4 @@
-@import 'default-style.less';
-
-@colorDarkBlue: #404680;
-@colorDarkerBlue: #161d3f;
-@colorMediumPurple: #A085D5;
-@colorPurple: #8159ce;
-@colorHighTransparentPurple: rgba(204, 195, 251, 0.25);
-@colorBlue: #2f55c3;
-
-@headerFontColor: @colorMediumPurple;
-@headerBackground: @colorDarkerBlue;
-@contentFontColor: @colorMediumPurple;
-@contentBackground: @colorDarkBlue;
-@footerFontColor: @colorMediumPurple;
-@footerBackground: @colorDarkerBlue;
-@entryWrapperBorder: @colorHighTransparentPurple;
-
-html {
-    font-family: arial;
-
-    #content .entryListWrapper {
-        border: 1px solid @entryWrapperBorder;
-        box-shadow: 0 0 4px 4px @entryWrapperBorder;
-    }
-
-    a:link {
-        color: @colorMediumPurple;
-    }
-
-    a:visited {
-        color: @colorPurple;
-    }
-
-    a:hover, a:active {
-        color: @colorWhite;
-    }
-}
+@import 'variables/default.less';
+@import 'variables/Lunar.less';
+@import 'style-rules/default.less';
+@import 'style-rules/Lunar.less';
