@@ -34,6 +34,12 @@ class Router
                 'controller' => 'WarpZone\Controller\Generation',
                 'action'     => 'rebuild',
             ),
+            array(
+                'pattern'    => '/changeTheme',
+                'template'   => '',
+                'controller' => 'WarpZone\Controller\Setting',
+                'action'     => 'changeTheme',
+            ),
         );
     }
 
