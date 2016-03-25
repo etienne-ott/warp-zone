@@ -18,7 +18,7 @@ class Generator
      * Rebuilds the index.html file and compiles all LESS style files
      * to CSS.
      *
-     * @param array A map of settings with the same structure as the config file
+     * @param \WarpZone\Config $settings The settings to use for rebuilding
      * @return array A list of error messages if errors occurred during execution
      */
     public function rebuildMain($settings) {
@@ -39,7 +39,7 @@ class Generator
             $html = $template->replace("columns", $entriesHtml)
                 ->replace("selectOptions", $optionsHtml)
                 ->replace("themeOptions", $themesHtml)
-                ->replace("activeTheme", $settings['Theme']['active_theme'])
+                ->replace("activeTheme", $settings->Theme->active_theme)
                 ->render();
             file_put_contents(APPLICATION_PATH . "/templates/generated.phtml", $html);
         } catch (Exception $e) {

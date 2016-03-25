@@ -91,7 +91,7 @@ class ElementFormat
      * automatically removes anything that looks like a path or extension.
      * 
      * @param array $themes A list of theme filenames
-     * @param array $settings A map of settings
+     * @param \WarpZone\Config The settings to use for formatting
      * @return string The formatted HTML structure
      */
     public static function formatThemeOptions($themes, $settings) {
@@ -104,7 +104,7 @@ class ElementFormat
             $parts = explode('.', $name);
             $name  = reset($parts);
             $html .= '<option class="selectOption" '
-                . ($settings['Theme']['active_theme'] == $name ? 'selected="true" ' : '')
+                . ($settings->Theme->active_theme == $name ? 'selected="true" ' : '')
                 . 'value="' . $name . '">' . $name . '</option>' . PHP_EOL;
         }
 

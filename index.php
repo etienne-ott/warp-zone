@@ -18,18 +18,18 @@ require 'library/WarpZone/autoload.php';
 
 // Read config file
 if (file_exists(APPLICATION_PATH . '/config.ini')) {
-    $config = parse_ini_file(APPLICATION_PATH . '/config.ini', true);
+    $config = \WarpZone\Config::fromIniFile(APPLICATION_PATH . '/config.ini');
 } else {
-    $config = parse_ini_file(APPLICATION_PATH . '/config-default.ini', true);
+    $config = \WarpZone\Config::fromIniFile(APPLICATION_PATH . '/config-default.ini');
 }
 
 // Create database connection
 $dbConfig           = new \Doctrine\DBAL\Configuration();
 $connectionParams = array(
-    'dbname'   => $config['DB']['name'],
-    'user'     => $config['DB']['user'],
-    'password' => $config['DB']['password'],
-    'host'     => $config['DB']['host'],
+    'dbname'   => $config->DB->name,
+    'user'     => $config->DB->user,
+    'password' => $config->DB->password,
+    'host'     => $config->DB->host,
     'driver'   => 'pdo_mysql',
 );
 $conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $dbConfig);

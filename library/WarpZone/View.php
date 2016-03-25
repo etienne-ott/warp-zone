@@ -26,7 +26,7 @@ class View extends \Slim\View
     {
         if ($this->_baseUrl === null) {
             $config = \Slim\Slim::getInstance()->config('settings');
-            $this->_baseUrl = $config['App']['base_url'];
+            $this->_baseUrl = $config->App->base_url;
         }
         return $this->_baseUrl;
     }
