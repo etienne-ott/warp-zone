@@ -27,10 +27,10 @@ class Generator
         try {
             $template = new Template('index.phtml');
             
-            $sections = Section::readFromCsvFile(self::SECTIONS_FILENAME);
+            $sections = Section::findAll();
             $optionsHtml = ElementFormat::formatOptions($sections);
 
-            $entries = Entry::readFromCsvFile(self::ENTRIES_FILENAME);
+            $entries = Entry::findAll();
             $entriesHtml = ElementFormat::formatEntries($entries, $sections);
 
             $themes = glob(APPLICATION_PATH . '/styles/*.less');
