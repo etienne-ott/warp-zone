@@ -30,7 +30,6 @@ sftp-config.json
 *.sublime-workspace
 
 # Generated files
-*.csv
 styles/*.css
 index.html
 templates/generated.phtml
