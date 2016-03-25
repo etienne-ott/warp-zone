@@ -27,87 +27,87 @@ body {
     padding: 0;
     margin: 0;
     height: 100%;
+}
 
-    #header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        color: @headerFontColor;
-        background-color: @headerBackground;
-        height: @headerHeight;
-        width: 100%;
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    color: @headerFontColor;
+    background-color: @headerBackground;
+    height: @headerHeight;
+    width: 100%;
 
-        .headerTitle {
-            font-size: 20px;
-            margin: 0 0 0 10px;
+    .headerTitle {
+        font-size: 20px;
+        margin: 0 0 0 10px;
+        display: inline-block;
+    }
+
+    .submitButton {
+        cursor: pointer;
+        padding: 3px 4px 2px 4px !important;
+    }
+
+    #entryForm,
+    #themeForm {
+        display: inline-block;
+
+        .inputField {
+            margin-left: 10px;
             display: inline-block;
-        }
-
-        .submitButton {
-            cursor: pointer;
-            padding: 3px 4px 2px 4px !important;
-        }
-
-        #entryForm,
-        #themeForm {
-            display: inline-block;
-
-            .inputField {
-                margin-left: 10px;
-                display: inline-block;
-            }
-        }
-
-        #themeForm {
-            float: right;
-            margin-right: 25px;
-        }
-
-        #rebuildPage,
-        #applyTheme {
-            display: inline-block;
-            margin-left: 20px;
         }
     }
 
-    #content {
-        margin-top: @headerHeight;
-        min-height: 100%;
-        background-color: @contentBackground;
-        color: @contentFontColor;
-
-        .entryListWrapper {
-            width: 200px;
-            height: 300px;
-            display: inline-block;
-            overflow: auto;
-            whitespace: no-wrap;
-            margin: 7px 5px 5px 5px;
-            border: 1px solid @entryWrapperBorder;
-            box-shadow: 0 0 2px 2px @entryWrapperBorder;
-
-            .entryListTitle {
-                margin-top: 5px;
-                text-align: center;
-                font-size: 16px;
-            }
-
-            .entryList {
-                margin-top: 0;
-            }
-        }
+    #themeForm {
+        float: right;
+        margin-right: 25px;
     }
 
-    #footer {
-        color: @footerFontColor;
-        background-color: @footerBackground;
-        height: @footerHeight;
-        width: 100%;
-        padding-left: 10px;
+    #rebuildPage,
+    #applyTheme {
+        display: inline-block;
+        margin-left: 20px;
+    }
+}
 
-        span {
-            vertical-align: middle;
+#content {
+    margin-top: @headerHeight;
+    min-height: 100%;
+    background-color: @contentBackground;
+    color: @contentFontColor;
+
+    .entryListWrapper {
+        width: 200px;
+        height: 300px;
+        display: inline-block;
+        overflow: auto;
+        whitespace: no-wrap;
+        margin: 7px 5px 5px 5px;
+        border: 1px solid @entryWrapperBorder;
+        box-shadow: 0 0 2px 2px @entryWrapperBorder;
+
+        .entryListTitle {
+            margin-top: 5px;
+            text-align: center;
+            font-size: 16px;
         }
+
+        .entryList {
+            margin-top: 0;
+        }
+    }
+}
+
+#footer {
+    color: @footerFontColor;
+    background-color: @footerBackground;
+    height: @footerHeight;
+    width: 100%;
+    padding-left: 10px;
+
+    span {
+        vertical-align: middle;
     }
 }
 
