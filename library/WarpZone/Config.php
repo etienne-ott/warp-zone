@@ -10,14 +10,28 @@ class Config
     protected $config;
 
     /**
+     * @var \WarpZone\Config $parent A (possible) parent Config instance, from
+     *    which this instance derives.
+     */
+    protected $parent;
+
+    /**
+     * @var string $parentKey If a parent is set, denotes the key under which
+     *    this instance originated.
+     */
+    protected $parentKey;
+
+    /**
      * Constructs a new config instance wrapped on the given settings array.
      *
      * @param array $config The settings structured like the array returned
      *    from parse_ini_file.
      */
-    public function __construct($config = array())
+    public function __construct($config = array(), $parent = null, $parentKey = null)
     {
-        $this->config = $config;
+        $this->config    = $config;
+        $this->parent    = $parent;
+        $this->parentKey = $parentKey;
     }
 
     /**
@@ -84,7 +98,7 @@ class Config
     {
         if (isset($this->config[$name])) {
             if (is_array($this->config[$name])) {
-                return new self($this->config[$name]);
+                return new self($this->config[$name], $this, $name);
             } else {
                 return $this->config[$name];
             }
@@ -116,5 +130,9 @@ class Config
         }
 
         $this->config[$name] = $value;
+
+        if ($this->parent instanceof \WarpZone\Config) {
+            $this->parent->{$this->parentKey} = $this->config;
+        }
     }
 }
