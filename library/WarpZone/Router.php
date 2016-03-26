@@ -40,6 +40,12 @@ class Router
                 'controller' => 'WarpZone\Controller\Setting',
                 'action'     => 'changeTheme',
             ),
+            array(
+                'pattern'    => '/login',
+                'template'   => 'login.phtml',
+                'controller' => 'WarpZone\Controller\Login',
+                'action'     => 'login',
+            ),
         );
     }
 
