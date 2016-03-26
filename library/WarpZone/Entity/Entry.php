@@ -1,7 +1,8 @@
 <?php
 namespace WarpZone\Entity;
 
-use WarpZone\Exception\FileNotFound;
+use WarpZone\Exception\FileNotFound,
+    WarpZone\Entity\Section;
 /**
  * Represents an entry containing data for an URL (e.g. name, priority, etc.)
  * and provides functionality to read/write and manipulate entries.
@@ -55,7 +56,7 @@ class Entry
         return $this->section;
     }
 
-    public function setSection(\WarpZone\Entity\Section $section)
+    public function setSection(Section $section)
     {
         $this->section = $section;
         return $this;
@@ -87,7 +88,7 @@ class Entry
         }
 
         if (isset($row['section_id']) && !empty($row['section_id'])) {
-            $section = \WarpZone\Entity\Section::findOneByEntryId($row['section_id']);
+            $section = Section::findOneByEntryId($row['section_id']);
         } else {
             $section = null;
         }
@@ -122,7 +123,7 @@ class Entry
                 if (isset($sections[$row['section_id']])) {
                     $section = $sections[$row['section_id']];
                 } else {
-                    $section = \WarpZone\Entity\Section::findOneBySectionId($row['section_id']);
+                    $section = Section::findOneBySectionId($row['section_id']);
                     $sections[$row['section_id']] = $section;
                 }
             } else {
@@ -138,5 +139,32 @@ class Entry
         }
 
         return $entries;
+    }
+
+    public static function create($url, $name, Section $section, $priority = 0)
+    {
+        if (empty($url) || empty($name)) {
+            throw new \Exception("Empty URL or name for entry provided in Entry::create.");
+        }
+
+        $db  = \Slim\Slim::getInstance()->config('db');
+        $sql = "INSERT INTO entry (url, display_name, section_id, priority)
+                VALUES (:url, :name, :secId, :prio)";
+
+        $db->executeQuery($sql, array(
+            'url'   => $url,
+            'name'  => $name,
+            'secId' => $section->getSectionId(),
+            'prio'  => (int)$priority,
+        ));
+        $id = $db->lastInsertId();
+
+        $entry = new self($id);
+        $entry->setUrl($url)
+            ->setDisplayName($name)
+            ->setSection($section)
+            ->setPriority((int)$priority);
+
+        return $entry;
     }
 }
