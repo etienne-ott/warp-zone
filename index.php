@@ -42,6 +42,10 @@ $app = new \Slim\Slim(array(
     'db'             => $conn,
 ));
 
+// Fetch session
+$session = \WarpZone\Entity\Session::getSession();
+$app->config('session', $session);
+
 // Add the routes to the app
 $router = new \WarpZone\Router();
 foreach ($router->getRoutes() as $route) {
