@@ -1,6 +1,8 @@
 <?php
 namespace WarpZone\Entity;
 
+use WarpZone\Entity\User;
+
 class Session
 {
     protected $sessionId;
@@ -9,9 +11,14 @@ class Session
 
     protected $token;
 
+    protected $user;
+
+    protected $userIsLoggedIn;
+
     public function __construct($id)
     {
         $this->sessionId = $id;
+        $this->userIsLoggedIn = false;
     }
 
     public function getSessionId()
@@ -38,6 +45,28 @@ class Session
     public function setToken($token)
     {
         $this->token = $token;
+        return $this;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    public function getUserIsLoggedIn()
+    {
+        return $this->userIsLoggedIn;
+    }
+
+    public function setUserIsLoggedIn($flag)
+    {
+        $this->userIsLoggedIn = (bool)$flag;
         return $this;
     }
 
@@ -129,8 +158,9 @@ class Session
     {
         $db  = \Slim\Slim::getInstance()->config('db');
         $sql = "SELECT *
-                FROM session
-                WHERE token = :token
+                FROM session s
+                LEFT JOIN user u USING(user_id)
+                WHERE s.token = :token
                 LIMIT 1";
 
         $result = $db->executeQuery($sql, array('token' => $token));
@@ -139,9 +169,19 @@ class Session
         if (!isset($row['session_id'])) {
             return null;
         } else {
+            if (isset($row['user_id'])) {
+                $user = new User($row['user_id']);
+                $user->setName($row['name'])
+                    ->setEmail($row['email']);
+            } else {
+                $user = null;
+            }
+
             $session = new self((int)$row['session_id']);
             $session->setToken($row['token'])
-                ->setValidTo(new \DateTime($row['valid_to']));
+                ->setValidTo(new \DateTime($row['valid_to']))
+                ->setUser($user)
+                ->setUserIsLoggedIn((bool)$row['user_is_logged_in']);
             return $session;
         }
     }
