@@ -7,6 +7,19 @@ namespace WarpZone\Controller;
 class Setting extends \WarpZone\Controller\AbstractController
 {
     /**
+     * @see \WarpZone\Controller\AbstractController::__construct
+     */
+    public function __construct($view)
+    {
+        $session = \Slim\Slim::getInstance()->config('session');
+        if (!$session->getUser() instanceof \WarpZone\Entity\User) {
+            $this->redirect('/login');
+        }
+
+        parent::__construct($view);
+    }
+
+    /**
      * Is called when the theme for the main page should be changed.
      *
      * @param array $args The route parameters
