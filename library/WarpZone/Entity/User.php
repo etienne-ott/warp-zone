@@ -1,7 +1,7 @@
 <?php
 namespace WarpZone\Entity;
 
-class Session
+class User
 {
     protected $userId;
 
