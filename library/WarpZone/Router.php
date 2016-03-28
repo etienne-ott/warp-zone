@@ -46,6 +46,12 @@ class Router
                 'controller' => 'WarpZone\Controller\Login',
                 'action'     => 'login',
             ),
+            array(
+                'pattern'    => '/register',
+                'template'   => 'register.phtml',
+                'controller' => 'WarpZone\Controller\Login',
+                'action'     => 'register',
+            ),
         );
     }
 

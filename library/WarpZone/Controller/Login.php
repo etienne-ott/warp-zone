@@ -15,4 +15,14 @@ class Login extends \WarpZone\Controller\AbstractController
     {
 
     }
+
+    /**
+     * Is called when the user wishes to register.
+     *
+     * @param array $args The route parameters
+     */
+    public function registerAction($args)
+    {
+
+    }
 }
