@@ -72,7 +72,26 @@ class Login extends \WarpZone\Controller\AbstractController
             }
 
             $user = User::create($data['email'], $data['name']);
-            $cred = UserCredentials::create($user, password_hash($data['password'], PASSWORD_DEFAULT));
+            $cred = UserCredentials::create(
+                $user,
+                password_hash($data['password'], PASSWORD_DEFAULT),
+                $this->generateOptinHash()
+            );
         }
+    }
+
+    protected function generateOptinHash()
+    {
+        static $chars = '0123456789ABCDEF';
+
+        // As soon as random_int becomes available with php7, use that one,
+        // as it is much more secure than this stuff here
+        mt_srand((int)(microtime(true) + filemtime(APPLICATION_PATH . '/config.ini')));
+
+        $token = '';
+        for ($i = 0; $i < 60; $i++) {
+            $token .= $chars[mt_rand(0, 15)];
+        }
+        return $token;
     }
 }

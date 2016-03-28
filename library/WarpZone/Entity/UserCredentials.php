@@ -11,6 +11,8 @@ class UserCredentials
 
     protected $passwordHash;
 
+    protected $optinHash;
+
     public function __construct($id)
     {
         $this->userCredentialsId = $id;
@@ -43,6 +45,17 @@ class UserCredentials
         return $this;
     }
 
+    public function getOptinHash()
+    {
+        return $this->optinHash;
+    }
+
+    public function setOptinHash($hash)
+    {
+        $this->optinHash = $hash;
+        return $this;
+    }
+
     public static function findOneByUserId($id)
     {
         $db  = \Slim\Slim::getInstance()->config('db');
@@ -64,29 +77,33 @@ class UserCredentials
 
         $cred = new self((int)$row['user_credentials_id']);
         $cred->setPasswordHash($row['password_hash'])
+            ->setOptinHash($row['optin_hash'])
             ->setUser($user);
 
         return $cred;
     }
 
-    public static function create(User $user, $hash)
+    public static function create(User $user, $pwHash, $oiHash = null)
     {
-        if (empty($hash)) {
+        if (empty($pwHash)) {
             throw new \Exception("Empty password hash provided in UserCredentials::create.");
         }
 
         $db  = \Slim\Slim::getInstance()->config('db');
-        $sql = "INSERT INTO user_credentials (user_id, password_hash) VALUES (:user_id, :hash)";
+        $sql = "INSERT INTO user_credentials (user_id, password_hash, optin_hash)
+                VALUES (:user_id, :pw_hash, :oi_hash)";
 
         $db->executeQuery($sql, array(
             'user_id' => $user->getUserId(),
-            'hash'    => $hash,
+            'pw_hash' => $pwHash,
+            'oi_hash' => $oiHash,
         ));
         $id = $db->lastInsertId();
 
         $cred = new self($id);
         $cred->setUser($user)
-            ->setPasswordHash($hash);
+            ->setPasswordHash($pwHash)
+            ->setOptinHash($oiHash);
 
         return $cred;
     }
