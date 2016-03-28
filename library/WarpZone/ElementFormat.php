@@ -110,4 +110,19 @@ class ElementFormat
 
         return $html;
     }
+
+    /**
+     * Formats the given error message as a span element with the necessary
+     * styles classes. If the given message is empty, returns an empty string.
+     *
+     * @param string $msg The error message
+     * @return string The formatted error message or an empty string
+     */
+    public static function formatError($msg) {
+        if (empty($msg)) {
+            return '';
+        } else {
+            return sprintf('<span class="error">%s</span>', $msg);
+        }
+    }
 }
