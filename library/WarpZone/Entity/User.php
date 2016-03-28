@@ -9,9 +9,12 @@ class User
 
     protected $email;
 
+    protected $isConfirmed;
+
     public function __construct($id)
     {
         $this->userId = $id;
+        $this->isConfirmed = false;
     }
 
     public function getUserId()
@@ -38,6 +41,17 @@ class User
     public function setEmail($email)
     {
         $this->email = $email;
+        return $this;
+    }
+
+    public function getIsConfirmed()
+    {
+        return $this->isConfirmed;
+    }
+
+    public function setIsConfirmed($flag)
+    {
+        $this->isConfirmed = (bool)$flag;
         return $this;
     }
 
