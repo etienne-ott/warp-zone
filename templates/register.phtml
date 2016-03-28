@@ -1,3 +1,5 @@
+<?php use WarpZone\ElementFormat; ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,15 +16,33 @@
         </div>
 
         <div id="content">
-            <h1>Register</h1>
+            <?php if ($this->status === 0 || $this->status === 1): ?>
+                <h1>Register</h1>
 
-            <form action="<?php echo $this->url('/register'); ?>" method="post" name="registerForm" id="registerForm">
-                <input type="text" name="email" id="email" placeholder="Email"></input>
-                <input type="text" name="name" id="name" placeholder="Username"></input>
-                <input type="password" name="password" id="password" placeholder="Password"></input>
-                <input type="password" name="repeat" id="repeat" placeholder="Repeat password"></input>
-                <input type="submit" name="submit" id="submit"></input>
-            </form>
+                <form action="<?php echo $this->url('/register'); ?>" method="post" name="registerForm" id="registerForm">
+                    <input type="text" name="email" id="email" placeholder="Email"
+                        value="<?php echo $this->formField('email'); ?>"/>
+                    <?php echo $this->formError('email'); ?>
+
+                    <input type="text" name="name" id="name" placeholder="Username"
+                        value="<?php echo $this->formField('name'); ?>"/>
+                    <?php echo $this->formError('name'); ?>
+
+                    <input type="password" name="password" id="password" placeholder="Password"
+                        value="<?php echo $this->formField('password'); ?>"/>
+                    <?php echo $this->formError('password'); ?>
+
+                    <input type="password" name="repeat" id="repeat" placeholder="Repeat password"
+                        value="<?php echo $this->formField('repeat'); ?>"/>
+                    <?php echo $this->formError('repeat'); ?>
+
+                    <input type="submit" name="submit" id="submit"></input>
+                </form>
+            <?php else: ?>
+                <h1>Thank you</h1>
+                <span>An email has been sent to the address you provided. Please use the activation link
+                    within to activate your account.</span>
+            <?php endif ?>
         </div>
     </body>
 </html>
