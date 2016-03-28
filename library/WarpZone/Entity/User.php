@@ -61,4 +61,71 @@ class User
 
         return $user;
     }
+
+    public static function findOneByEmail($email)
+    {
+        $db  = \Slim\Slim::getInstance()->config('db');
+        $sql = "SELECT *
+                FROM user
+                WHERE email = :email";
+
+        $result = $db->executeQuery($sql, array('email' => trim($email)));
+        $row    = $result->fetch();
+
+        if (!isset($row['user_id'])) {
+            return null;
+        }
+
+        $user = new self((int)$row['user_id']);
+        $user->setName($row['name'])
+            ->setEmail($row['email']);
+
+        return $user;
+    }
+
+    public static function findOneByName($name)
+    {
+        $db  = \Slim\Slim::getInstance()->config('db');
+        $sql = "SELECT *
+                FROM user
+                WHERE name = :name";
+
+        $result = $db->executeQuery($sql, array('name' => trim($name)));
+        $row    = $result->fetch();
+
+        if (!isset($row['user_id'])) {
+            return null;
+        }
+
+        $user = new self((int)$row['user_id']);
+        $user->setName($row['name'])
+            ->setEmail($row['email']);
+
+        return $user;
+    }
+
+    public static function create($email, $name)
+    {
+        $email = trim($email);
+        $name  = trim($name);
+
+        if (empty($email) || empty($name)) {
+            throw new \Exception("Empty email or name provided in User::create.");
+        }
+
+        $db  = \Slim\Slim::getInstance()->config('db');
+        $sql = "INSERT INTO user (email, name) VALUES (:email, :name)";
+
+        $db->executeQuery($sql, array(
+            'email' => $email,
+            'name'  => $name,
+        ));
+        $id = $db->lastInsertId();
+
+        $user = new self($id);
+        $user->setEmail($email)
+            ->setName($name);
+
+        return $user;
+    }
 }
