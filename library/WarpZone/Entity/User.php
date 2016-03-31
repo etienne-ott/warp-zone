@@ -118,6 +118,23 @@ class User
         return $user;
     }
 
+    public function persist()
+    {
+        $db  = \Slim\Slim::getInstance()->config('db');
+        $sql = "UPDATE user
+                SET email = :email,
+                    name = :name
+                    is_confirmed = :conf
+                WHERE user_id = :id";
+
+        $db->execute($sql, array(
+            'id'    => $this->getUserId(),
+            'name'  => $this->getName(),
+            'email' => $this->getEmail(),
+            'conf'  => $this->getIsConfirmed(),
+        ));
+    }
+
     public static function create($email, $name)
     {
         $email = trim($email);
