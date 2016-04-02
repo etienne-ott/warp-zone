@@ -123,11 +123,11 @@ class User
         $db  = \Slim\Slim::getInstance()->config('db');
         $sql = "UPDATE user
                 SET email = :email,
-                    name = :name
+                    name = :name,
                     is_confirmed = :conf
                 WHERE user_id = :id";
 
-        $db->execute($sql, array(
+        $db->executeQuery($sql, array(
             'id'    => $this->getUserId(),
             'name'  => $this->getName(),
             'email' => $this->getEmail(),
