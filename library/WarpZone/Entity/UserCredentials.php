@@ -83,6 +83,34 @@ class UserCredentials
         return $cred;
     }
 
+    public static function findOneByOptinHash($hash)
+    {
+        $db  = \Slim\Slim::getInstance()->config('db');
+        $sql = "SELECT *
+                FROM user_credentials uc
+                JOIN user USING (user_id)
+                WHERE uc.optin_hash = :hash
+                LIMIT 1";
+
+        $result = $db->executeQuery($sql, array('hash' => $hash));
+        $row    = $result->fetch();
+
+        if (!isset($row['user_credentials_id'])) {
+            return null;
+        }
+
+        $user = new User((int)$row['user_id']);
+        $user->setName($row['name'])
+            ->setEmail($row['email']);
+
+        $cred = new self((int)$row['user_credentials_id']);
+        $cred->setPasswordHash($row['password_hash'])
+            ->setOptinHash($row['optin_hash'])
+            ->setUser($user);
+
+        return $cred;
+    }
+
     public static function create(User $user, $pwHash, $oiHash = null)
     {
         if (empty($pwHash)) {
