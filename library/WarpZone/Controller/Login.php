@@ -77,6 +77,9 @@ class Login extends \WarpZone\Controller\AbstractController
                 password_hash($data['password'], PASSWORD_DEFAULT),
                 $this->generateOptinHash()
             );
+
+            $mail = new \WarpZone\Mail\Registration($cred);
+            $mail->send();
         }
     }
 
