@@ -36,6 +36,16 @@ class Login extends \WarpZone\Controller\AbstractController
         }
     }
 
+    /**
+     * Is called when the user wishes to confirm a registration.
+     *
+     * @param array $args The route parameters
+     */
+    public function confirmAction($args)
+    {
+
+    }
+
     protected function handleRegisterFormData($data)
     {
         $errors = array();

@@ -52,6 +52,12 @@ class Router
                 'controller' => 'WarpZone\Controller\Login',
                 'action'     => 'register',
             ),
+            array(
+                'pattern'    => '/confirm/:hash',
+                'template'   => 'confirm.phtml',
+                'controller' => 'WarpZone\Controller\Login',
+                'action'     => 'confirm',
+            ),
         );
     }
 
