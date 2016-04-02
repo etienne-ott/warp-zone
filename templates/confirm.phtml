@@ -1,0 +1,35 @@
+<?php use WarpZone\ElementFormat; ?>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Warp zone</title>
+        <link rel="icon" type="image/png" href="favicon.png"/>
+        <link href="styles/default.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript"><?php echo $this->getInlineJavascript(); ?></script>
+    </head>
+
+    <body>
+        <div id="header">
+            <h3 class="headerTitle">Warp zone</h3>
+        </div>
+
+        <div id="content">
+            <?php if ($this->status === 0): ?>
+                <h1>Sorry</h1>
+                <span>We could not find a registered user with the given confirmation code. Please make sure
+                    the URL was correctly copied from the mail. It is also possible that the user account you
+                    are trying to confirm has been deleted. Unconfirmed accounts will be deleted after a certain
+                    timespan of inactivity has been passed.</span>
+            <?php elseif ($this->status === 1): ?>
+                <h1>Hello again</h1>
+                <span>The user account you are trying to activate has already been activated.</span>
+            <?php else: ?>
+                <h1>Thank you</h1>
+                <span>Your user account has been activated. You can now use all the functionality of Warp Zone.
+                    Have fun!</span>
+            <?php endif ?>
+        </div>
+    </body>
+</html>

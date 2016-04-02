@@ -43,7 +43,22 @@ class Login extends \WarpZone\Controller\AbstractController
      */
     public function confirmAction($args)
     {
+        $hash = $args[0];
+        $cred = UserCredentials::findOneByOptinHash($hash);
 
+        if ($cred instanceof UserCredentials) {
+            $user = $cred->getUser();
+
+            if (!$user->getIsConfirmed()) {
+                $user->setIsConfirmed(true);
+                $user->persist();
+                $this->_view->status = 2;
+            } else {
+                $this->_view->status = 1;
+            }
+        } else {
+            $this->_view->status = 0;
+        }
     }
 
     protected function handleRegisterFormData($data)
