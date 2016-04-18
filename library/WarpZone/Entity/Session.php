@@ -70,6 +70,25 @@ class Session
         return $this;
     }
 
+    public function persist()
+    {
+        $db  = \Slim\Slim::getInstance()->config('db');
+        $sql = "UPDATE session
+                SET valid_to = :ts,
+                    token = :token,
+                    user_id = :user_id,
+                    user_is_logged_in = :flag
+                WHERE session_id = :id";
+
+        $db->executeQuery($sql, array(
+            'ts'      => $this->getValidTo()->format('Y-m-d H:i:s'),
+            'user_id' => $this->getUser() instanceof User ? $this->getUser()->getUserId() : null,
+            'token'   => $this->getToken(),
+            'flag'    => $this->getUserIsLoggedIn(),
+            'id'      => $this->getSessionId(),
+        ));
+    }
+
     /**
      * Checks if there is a session token cookie and tries to find a valid session
      * for that token. If none found, creates a new session and token cookie.
