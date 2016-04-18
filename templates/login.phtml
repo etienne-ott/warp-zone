@@ -17,8 +17,14 @@
             <h1>Login</h1>
 
             <form action="<?php echo $this->url('/login'); ?>" method="post" name="loginForm" id="loginForm">
-                <input type="text" name="email" id="email" placeholder="Email"></input>
-                <input type="text" name="password" id="password" placeholder="Password"></input>
+                <input type="text" name="email" id="email" placeholder="Email"
+                        value="<?php echo $this->formField('email'); ?>"/>
+                    <?php echo $this->formError('email'); ?>
+
+                <input type="password" name="password" id="password" placeholder="Password"
+                        value="<?php echo $this->formField('password'); ?>"/>
+                    <?php echo $this->formError('password'); ?>
+
                 <input type="submit" name="submit" id="submit"></input>
             </form>
         </div>

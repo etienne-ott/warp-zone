@@ -2,7 +2,8 @@
 namespace WarpZone\Controller;
 
 use WarpZone\Entity\User,
-    WarpZone\Entity\UserCredentials;
+    WarpZone\Entity\UserCredentials,
+    WarpZone\Entity\Session;
 /**
  * Handles login, password reset and related requests.
  */
@@ -15,7 +16,25 @@ class Login extends \WarpZone\Controller\AbstractController
      */
     public function loginAction($args)
     {
+        if (!empty($_POST)) {
+            $errors = $this->handleLoginFormData($_POST);
+            unset($_POST['password']);
 
+            if (empty($errors)) {
+                $session = Session::getSession();
+                $session->setUserIsLoggedIn(true)
+                    ->setUser(User::findOneByEmail($_POST['email']));
+                $session->persist();
+
+                $this->redirect('/');
+            }
+
+            $this->_view->setFormData($_POST);
+            $this->_view->setErrors($errors);
+            $this->_view->status = 1;
+        } else {
+            $this->_view->status = 0;
+        }
     }
 
     /**
@@ -105,6 +124,38 @@ class Login extends \WarpZone\Controller\AbstractController
 
             $mail = new \WarpZone\Mail\Registration($cred);
             $mail->send();
+        }
+    }
+
+    protected function handleLoginFormData($data)
+    {
+        $errors = array();
+
+        if (
+            isset($data['email'])
+            && isset($data['password'])
+        ) {
+            $user = User::findOneByEmail($data['email']);
+            if (!$user instanceof User) {
+                $errors['email'] = "A user with that email does not exist.";
+                return $errors;
+            }
+
+            if (!$user->getIsConfirmed()) {
+                $errors['email'] = "This user has not completed registration yet.";
+                return $errors;
+            }
+
+            $credentials = UserCredentials::findOneByUserId($user->getUserId());
+            if (!$credentials instanceof UserCredentials) {
+                $errors['email'] = "This user has no login data. Please contact an administrator.";
+                return $errors;
+            }
+
+            if (!password_verify($data['password'], $credentials->getPasswordHash())) {
+                $errors['password'] = "Incorrect password.";
+                return $errors;
+            }
         }
     }
 
