@@ -71,7 +71,8 @@ class User
 
         $user = new self((int)$row['user_id']);
         $user->setName($row['name'])
-            ->setEmail($row['email']);
+            ->setEmail($row['email'])
+            ->setIsConfirmed($row['is_confirmed']);
 
         return $user;
     }
@@ -92,7 +93,8 @@ class User
 
         $user = new self((int)$row['user_id']);
         $user->setName($row['name'])
-            ->setEmail($row['email']);
+            ->setEmail($row['email'])
+            ->setIsConfirmed($row['is_confirmed']);
 
         return $user;
     }
@@ -113,7 +115,8 @@ class User
 
         $user = new self((int)$row['user_id']);
         $user->setName($row['name'])
-            ->setEmail($row['email']);
+            ->setEmail($row['email'])
+            ->setIsConfirmed($row['is_confirmed']);
 
         return $user;
     }
